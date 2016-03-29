@@ -1,0 +1,12 @@
+ext {
+    //Project dependencies
+
+    jUnitTestVersion = '4.12'
+    appCompatVersion = '23.1.1'
+    kotlinVersion = '1.0.1-2'
+    dependencies = [
+            jUnitTest: "junit:junit:$jUnitTestVersion",
+            appCompat: "com.android.support:appcompat-v7:$appCompatVersion",
+            kotlin   : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    ]
+}
