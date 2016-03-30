@@ -30,6 +30,7 @@ dependencies {
     testCompile appDependencies.jUnitTest
     compile appDependencies.appCompat
     compile appDependencies.kotlin
+    compile appDependencies.kotterKnife
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion
