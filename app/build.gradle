@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -21,6 +22,14 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -31,10 +40,20 @@ dependencies {
     compile appDependencies.appCompat
     compile appDependencies.kotlin
     compile appDependencies.kotterKnife
+    kapt appDependencies.daggerCompiler //needed for source code generation using Kotlin processor
+    compile appDependencies.dagger
+    provided appDependencies.javaxAnnotation //needed to resolve compilation errors
+    compile appDependencies.kotlinGenerator
+    compile appDependencies.retrofit2
+    compile(appDependencies.simpleXMLConverter) {
+        exclude module: 'stax-api'
+        exclude module: 'stax'
+        exclude module: 'xpp3'
+    }
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion
-    
+
     repositories {
         mavenCentral()
     }

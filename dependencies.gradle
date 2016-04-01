@@ -5,10 +5,21 @@ ext {
     appCompatVersion = '23.1.1'
     kotlinVersion = '1.0.1-2'
     kotterKnifeVersion = '0.1.0-SNAPSHOT'
+    daggerCompilerVersion = '2.0.2'
+    daggerVersion = '2.0.2'
+    javaxAnnotationVersion = '10.0-b28'
+    retrofitVersion = '2.0.1'
+
     dependencies = [
-            jUnitTest  : "junit:junit:$jUnitTestVersion",
-            appCompat  : "com.android.support:appcompat-v7:$appCompatVersion",
-            kotlin     : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-            kotterKnife: "com.jakewharton:kotterknife:$kotterKnifeVersion"
+            jUnitTest         : "junit:junit:$jUnitTestVersion",
+            appCompat         : "com.android.support:appcompat-v7:$appCompatVersion",
+            kotlin            : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotterKnife       : "com.jakewharton:kotterknife:$kotterKnifeVersion",
+            daggerCompiler    : "com.google.dagger:dagger-compiler:$daggerCompilerVersion",
+            dagger            : "com.google.dagger:dagger:$daggerVersion",
+            javaxAnnotation   : "org.glassfish:javax.annotation:$javaxAnnotationVersion",
+            kotlinGenerator   : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            simpleXMLConverter: "com.squareup.retrofit2:converter-simplexml:$retrofitVersion"
     ]
 }
