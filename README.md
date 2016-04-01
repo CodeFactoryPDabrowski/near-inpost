@@ -1,0 +1,1 @@
+Project to find nearest InPost machines. Written in Kotlin.
