@@ -50,6 +50,12 @@ dependencies {
         exclude module: 'stax'
         exclude module: 'xpp3'
     }
+    compile appDependencies.slimber
+    compile appDependencies.retrofitRxAdapter
+    compile appDependencies.rxAndroid
+    compile appDependencies.rxKotlin
+    compile appDependencies.stetho
+    compile appDependencies.stethoOkHttp
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

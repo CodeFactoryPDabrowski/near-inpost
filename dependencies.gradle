@@ -9,6 +9,12 @@ ext {
     daggerVersion = '2.0.2'
     javaxAnnotationVersion = '10.0-b28'
     retrofitVersion = '2.0.1'
+    slimberVersion = '1.0.4'
+    retrofitRxAdapterVersion = '2.0.0'
+    rxAndroidVersion = '1.1.0'
+    rxKotlinVersion = '0.55.0'
+    stethoVersion = '1.3.1'
+
 
     dependencies = [
             jUnitTest         : "junit:junit:$jUnitTestVersion",
@@ -20,6 +26,12 @@ ext {
             javaxAnnotation   : "org.glassfish:javax.annotation:$javaxAnnotationVersion",
             kotlinGenerator   : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
             retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            simpleXMLConverter: "com.squareup.retrofit2:converter-simplexml:$retrofitVersion"
+            simpleXMLConverter: "com.squareup.retrofit2:converter-simplexml:$retrofitVersion",
+            slimber           : "com.github.PaulWoitaschek:Slimber:$slimberVersion",
+            retrofitRxAdapter : "com.squareup.retrofit2:adapter-rxjava:$retrofitRxAdapterVersion",
+            rxAndroid         : "io.reactivex:rxandroid:$rxAndroidVersion",
+            rxKotlin          : "io.reactivex:rxkotlin:$rxKotlinVersion",
+            stetho            : "com.facebook.stetho:stetho:$stethoVersion",
+            stethoOkHttp      : "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
     ]
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerFragmentComponent
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.FragmentComponent
+import d
 
 /**
  * Base implementation for applications fragments.
@@ -14,6 +15,12 @@ abstract class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        d { "Fragment created" }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        d { "Fragment destroyed" }
     }
 
     /**

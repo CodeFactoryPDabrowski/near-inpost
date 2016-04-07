@@ -4,6 +4,7 @@ import android.app.Application
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.AppComponent
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerAppComponent
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.AppModule
+import com.facebook.stetho.Stetho
 
 class App : Application() {
 
@@ -13,6 +14,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
         initComponent()
     }
 
