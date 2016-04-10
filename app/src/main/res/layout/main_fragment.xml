@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_under_search_view_height"
+        android:background="@color/colorPrimary" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_search_view_height"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="@dimen/common_half_margin"
+        android:layout_marginEnd="@dimen/common_default_margin"
+        android:layout_marginStart="@dimen/common_default_margin">
+
+        <EditText
+            android:id="@+id/mainLocationToSearch"
+            style="@style/MainSearchViewStyle" />
+    </android.support.v7.widget.CardView>
     <!--Todo: Implement this.-->
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mainInPostSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/common_default_margin"
+        android:src="@drawable/main_search_icon"
+        app:fabSize="normal" />
+</RelativeLayout>

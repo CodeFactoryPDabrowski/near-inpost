@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Style of main search view, input for places to find nearest inPost.-->
+    <style name="MainSearchViewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:inputType">text</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingStart">@dimen/common_default_margin</item>
+        <item name="android:paddingEnd">@dimen/common_default_margin</item>
+        <item name="android:textSize">@dimen/common_big_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+</resources>

@@ -8,7 +8,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 
 class MainActivity : BaseActivity() {
 
-    val toolbar: Toolbar by bindView(R.id.mainToolbar)
+    val toolbar: Toolbar by bindView(R.id.commonToolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

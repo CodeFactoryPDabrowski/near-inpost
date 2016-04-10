@@ -10,7 +10,7 @@ class Paczkomaty() {
      * List of nearest from REST request postcode inPost machines.
      */
     @field:ElementList(name = "machines", entry = "machine", inline = true, required = false)
-    var machine: List<Machine> = emptyList()
+    var machine: List<Machine>? = null
 }
 
 

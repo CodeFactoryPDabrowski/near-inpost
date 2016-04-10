@@ -56,6 +56,8 @@ dependencies {
     compile appDependencies.rxKotlin
     compile appDependencies.stetho
     compile appDependencies.stethoOkHttp
+    compile appDependencies.design
+    compile appDependencies.cardView
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

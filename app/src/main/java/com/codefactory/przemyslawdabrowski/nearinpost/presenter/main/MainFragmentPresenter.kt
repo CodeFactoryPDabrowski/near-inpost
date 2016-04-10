@@ -32,7 +32,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit) : Presenter<
      * TODO: Proper implement. Method wrong implemented!!!! change it.
      */
     fun create() {
-        nearestMachineService.findNearestMachines("02-22222497ssss", 10)
+        nearestMachineService.findNearestMachines("18-430", 10)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

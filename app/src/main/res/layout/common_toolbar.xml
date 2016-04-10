@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/commonToolbar"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:minHeight="?attr/actionBarSize" />
+    android:layout_height="wrap_content">
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/commonToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
+
+    <!--Application header toolbar text-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingEnd="@dimen/common_default_margin"
+        android:paddingStart="@dimen/common_default_margin"
+        android:text="@string/main_nearest_in_post"
+        android:textSize="@dimen/common_big_text_size"
+        android:textStyle="bold" />
+</RelativeLayout>

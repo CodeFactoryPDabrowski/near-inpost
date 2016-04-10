@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NearInPost</string>
+    <string name="main_nearest_in_post">Where is nearest InPost?</string>
 </resources>
