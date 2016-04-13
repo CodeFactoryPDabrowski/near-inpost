@@ -58,6 +58,7 @@ dependencies {
     compile appDependencies.stethoOkHttp
     compile appDependencies.design
     compile appDependencies.cardView
+    compile appDependencies.recyclerView
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

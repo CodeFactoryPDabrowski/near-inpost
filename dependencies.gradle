@@ -16,7 +16,7 @@ ext {
     stethoVersion = '1.3.1'
     designVersion = '23.0.0'
     cardViewVersion = '23.0.1'
-
+    recyclerViewVersion = '23.0.1'
 
     dependencies = [
             jUnitTest         : "junit:junit:$jUnitTestVersion",
@@ -37,5 +37,6 @@ ext {
             stethoOkHttp      : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
             design            : "com.android.support:design:$designVersion",
             cardView          : "com.android.support:cardview-v7:$cardViewVersion",
+            recyclerView      : "com.android.support:recyclerview-v7:$recyclerViewVersion",
     ]
 }

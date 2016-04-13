@@ -2,6 +2,8 @@
 <resources>
     <color name="colorPrimary">#FFD600</color>
     <color name="colorPrimaryDark">#FBC02D</color>
-    <color name="colorAccent">#5D3F1B</color>
+    <color name="colorAccent">#424242</color>
     <color name="colorWhite">@android:color/white</color>
+    <color name="colorSearchResultCard">#EFEBE9</color>
+    <color name="colorSearchDivider">#E0E0E0</color>
 </resources>

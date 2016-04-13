@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/beaconCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--TODO: Set font colors, style this.-->
+    <!--Location icon-->
+    <ImageView
+        android:id="@+id/mainSearchMachineIcon"
+        android:layout_width="@dimen/main_search_location_icon_size"
+        android:layout_height="@dimen/main_search_location_icon_size"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/main_search_result_machine_location" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_search_item_height"
+        android:layout_toEndOf="@+id/mainSearchMachineIcon"
+        android:layout_toStartOf="@+id/mainMachineDistance"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <!--Name of inPost machine-->
+        <TextView
+            android:id="@+id/mainMachineName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
+
+        <!--Street where is inPost machine-->
+        <TextView
+            android:id="@+id/mainMachineStreet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mainMachineDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/common_default_margin" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_divider_size"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorSearchDivider" />
+
+</RelativeLayout>

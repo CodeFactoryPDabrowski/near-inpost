@@ -10,11 +10,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
 @Module
-class ApiModule() {
-
-    companion object {
-        val PACZKOMATY_BASE_URL: String = "http://api.paczkomaty.pl"
-    }
+class ApiModule(val baseUrl: String) {
 
     @AppScope
     @Provides
@@ -27,7 +23,7 @@ class ApiModule() {
     @AppScope
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(PACZKOMATY_BASE_URL)
+        return Retrofit.Builder().baseUrl(baseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
