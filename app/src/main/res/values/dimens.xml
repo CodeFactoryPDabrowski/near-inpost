@@ -7,4 +7,5 @@
     <dimen name="main_search_location_icon_size">35dp</dimen>
     <dimen name="main_search_item_height">96dp</dimen>
     <dimen name="common_divider_size">1dp</dimen>
+    <dimen name="custom_location_card_margin_bottom">4dp</dimen>
 </resources>

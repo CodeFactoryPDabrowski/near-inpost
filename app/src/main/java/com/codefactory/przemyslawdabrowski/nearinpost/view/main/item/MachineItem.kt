@@ -1,6 +1,6 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.main.item
 
-import com.codefactory.przemyslawdabrowski.nearinpost.model.api.ui.MachineUi
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 
 /**
  * @param item Item to display on search nearest inPost list view.

@@ -1,4 +1,4 @@
-package com.codefactory.przemyslawdabrowski.nearinpost.model.api.ui
+package com.codefactory.przemyslawdabrowski.nearinpost.model.ui
 
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 

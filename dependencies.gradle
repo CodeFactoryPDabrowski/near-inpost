@@ -17,6 +17,8 @@ ext {
     designVersion = '23.0.0'
     cardViewVersion = '23.0.1'
     recyclerViewVersion = '23.0.1'
+    reactiveLocationVersion = '0.8@aar'
+    serviceLocationVersion = '8.1.0'
 
     dependencies = [
             jUnitTest         : "junit:junit:$jUnitTestVersion",
@@ -38,5 +40,7 @@ ext {
             design            : "com.android.support:design:$designVersion",
             cardView          : "com.android.support:cardview-v7:$cardViewVersion",
             recyclerView      : "com.android.support:recyclerview-v7:$recyclerViewVersion",
+            reactiveLocation  : "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
+            serviceLocation   : "com.google.android.gms:play-services-location:$serviceLocationVersion",
     ]
 }

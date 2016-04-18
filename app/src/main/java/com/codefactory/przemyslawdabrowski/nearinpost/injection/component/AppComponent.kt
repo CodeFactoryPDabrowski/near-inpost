@@ -3,12 +3,14 @@ package com.codefactory.przemyslawdabrowski.nearinpost.injection.component
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.ApiModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.AppModule
+import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.LocationModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.AppScope
 import dagger.Component
+import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import retrofit2.Retrofit
 
 @AppScope
-@Component(modules = arrayOf(AppModule::class, ApiModule::class))
+@Component(modules = arrayOf(AppModule::class, ApiModule::class, LocationModule::class))
 interface AppComponent {
 
     /**
@@ -20,4 +22,9 @@ interface AppComponent {
      * @return Retrofit singleton object.
      */
     fun retrofit(): Retrofit
+
+    /**
+     * Provide location provider.
+     */
+    fun locationProvide(): ReactiveLocationProvider
 }
