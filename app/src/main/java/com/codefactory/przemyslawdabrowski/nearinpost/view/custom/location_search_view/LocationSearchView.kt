@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerFragmentComponent
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -61,6 +62,11 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
      */
     private var subscription: Subscription? = null
 
+    /**
+     * Listener of search results.
+     */
+    private var resultListener: LocationResultListener? = null
+
     constructor(context: Context) : this(context, null)
 
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -72,7 +78,13 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         searchResult = findViewById(R.id.customLocationSearchResult) as RecyclerView
         searchDivider = findViewById(R.id.customLocationDivider)
 
-        adapter = LocationSearchAdapter()
+        adapter = LocationSearchAdapter(object : LocationSearchHolder.LocationSearchHolderListener {
+            override fun onResultClick(postalCodeUi: PostalCodeUi) {
+                hideHints()
+                resultListener?.let { (resultListener as LocationResultListener).onResultClick(postalCodeUi) }
+            }
+
+        })
         searchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         searchResult.adapter = adapter
         setSearchLayoutHeight()
@@ -99,9 +111,20 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     }
 
     /**
-     * Get text from search location view.
+     * Set listener to handle search result click.
+     * @param listener Listener to handle results.
      */
-    fun getText(): String = search.text.toString()
+    fun setResultListener(listener: LocationResultListener) {
+        if (resultListener != null) {
+            resultListener = null
+        }
+        resultListener = listener
+    }
+
+    /**
+     * Get postal code from search location view. It can be postal code or text.
+     */
+    fun getPostalCode(): PostalCodeUi = PostalCodeUi(search.text.toString())
 
 
     /**
@@ -151,5 +174,17 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         var recyclerLayoutParams = searchResult.layoutParams
         recyclerLayoutParams.height = (itemCount * resources.getDimension(R.dimen.main_search_view_height)).toInt()
         searchResult.layoutParams = recyclerLayoutParams
+    }
+
+    /**
+     * Listener to handle search results.
+     */
+    interface LocationResultListener {
+
+        /**
+         * Click on result action.
+         *@param postalCodeUi Postal code object.
+         */
+        fun onResultClick(postalCodeUi: PostalCodeUi)
     }
 }

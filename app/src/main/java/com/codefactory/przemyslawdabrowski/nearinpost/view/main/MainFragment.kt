@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.main.MainFragmentPresenter
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.main.MainFragmentView
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseFragment
@@ -84,11 +85,16 @@ class MainFragment : BaseFragment(), MainFragmentView {
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()
-            presenter.searchForNearestInPost(searchView.getText())
+            presenter.searchForNearestInPost(searchView.getPostalCode())
         }
         consumerView.setOnTouchListener { view, motionEvent ->
             searchView.hideHints()
             false
         }
+        searchView.setResultListener(object : LocationSearchView.LocationResultListener {
+            override fun onResultClick(postalCodeUi: PostalCodeUi) {
+                presenter.searchForNearestInPost(postalCodeUi)
+            }
+        })
     }
 }

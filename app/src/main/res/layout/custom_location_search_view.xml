@@ -28,8 +28,6 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/customLocationSearchResult"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/common_default_margin"
-            android:layout_marginStart="@dimen/common_default_margin" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

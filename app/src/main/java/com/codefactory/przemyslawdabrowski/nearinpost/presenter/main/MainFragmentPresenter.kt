@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.presenter.main
 
 import com.codefactory.przemyslawdabrowski.nearinpost.api.NearestMachinesService
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.Presenter
 import d
 import retrofit2.Retrofit
@@ -37,15 +38,16 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit) : Presenter<
 
     /**
      * Search nearest in post machines.
-     * @param postCode Post code of searching location.
+     * @param postalCodeUi Postal code object contains postal code of searching location.
      * @param limit Limit of searching machines.
      */
-    fun searchForNearestInPost(postCode: String, limit: Int = 3) {
+    fun searchForNearestInPost(postalCodeUi: PostalCodeUi, limit: Int = 5) {
         //TODO: Check if valid post code. Do some cache after rotation mechanism.
-        if (postCode.length == 0) {
+        var postalCode = postalCodeUi.postalCode
+        if (postalCode.length == 0) {
             return
         }
-        subscription = nearestMachineService.findNearestMachines(postCode, limit)
+        subscription = nearestMachineService.findNearestMachines(postalCode, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
