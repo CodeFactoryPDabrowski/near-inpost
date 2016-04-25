@@ -13,5 +13,6 @@
         <item name="android:paddingEnd">@dimen/common_default_margin</item>
         <item name="android:textSize">@dimen/common_big_text_size</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:imeOptions">flagNoExtractUi</item>
     </style>
 </resources>

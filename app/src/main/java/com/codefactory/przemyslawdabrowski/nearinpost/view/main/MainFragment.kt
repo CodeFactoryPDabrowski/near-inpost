@@ -32,6 +32,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     private lateinit var searchView: LocationSearchView
     private lateinit var searchButton: FloatingActionButton
     private lateinit var searchResultList: RecyclerView
+    private lateinit var consumerView: View
 
     /**
      * Adapter to provide search query results views for recyclerView.
@@ -72,6 +73,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
             searchButton = view.findViewById(R.id.mainInPostSearch) as FloatingActionButton
             searchView = view.findViewById(R.id.mainLocationToSearch) as LocationSearchView
             searchResultList = view.findViewById(R.id.mainInPostSearchResultList) as RecyclerView
+            consumerView = view.findViewById(R.id.mainEventConsumerView)
         }
         initComponent().inject(this)
         presenter.bind(this)
@@ -80,6 +82,13 @@ class MainFragment : BaseFragment(), MainFragmentView {
         searchResultList.setHasFixedSize(true)
         adapter = MainFragmentAdapter()
         searchResultList.adapter = adapter
-        searchButton.setOnClickListener({ view -> presenter.searchForNearestInPost(searchView.getText()) })
+        searchButton.setOnClickListener { view ->
+            searchView.hideHints()
+            presenter.searchForNearestInPost(searchView.getText())
+        }
+        consumerView.setOnTouchListener { view, motionEvent ->
+            searchView.hideHints()
+            false
+        }
     }
 }

@@ -35,6 +35,12 @@
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary" />
 
+    <!--View that consumes click events-->
+    <View
+        android:id="@+id/mainEventConsumerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <!--Search view contains dynamic location hints-->
     <com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view.LocationSearchView
         android:id="@+id/mainLocationToSearch"

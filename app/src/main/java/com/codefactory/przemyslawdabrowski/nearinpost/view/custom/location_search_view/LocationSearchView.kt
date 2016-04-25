@@ -1,6 +1,7 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view
 
 import android.content.Context
+import android.location.Address
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
@@ -102,6 +103,15 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
      */
     fun getText(): String = search.text.toString()
 
+
+    /**
+     * Hide hints result layout.
+     */
+    fun hideHints() {
+        setSearchLayoutHeight()
+        searchDivider.visibility = GONE
+    }
+
     /**
      * Action on search edit text changed.
      * @param newText Changed text.
@@ -113,9 +123,10 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        adapter.addSearchResult(it)
-                        setSearchLayoutHeight(it.size)
-                        searchDivider.visibility = VISIBLE
+                        var resultWitPostalOnly = getAddressesWithPostalOnly(it)
+                        adapter.addSearchResult(resultWitPostalOnly)
+                        setSearchLayoutHeight(resultWitPostalOnly.size)
+                        searchDivider.visibility = if (resultWitPostalOnly.size > 0) VISIBLE else GONE
                     }, {
                         err ->
                         hideHints()
@@ -126,6 +137,13 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     }
 
     /**
+     * Get results addresses with postal code only.
+     * @param allAddressesResults List of all addresses results.
+     * @return List of addresses with postal code.
+     */
+    private fun getAddressesWithPostalOnly(allAddressesResults: List<Address>): List<Address> = allAddressesResults.filter { addr -> addr.postalCode != null }
+
+    /**
      * Set height of search query results.
      * @param itemCount Number of items.
      */
@@ -133,13 +151,5 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         var recyclerLayoutParams = searchResult.layoutParams
         recyclerLayoutParams.height = (itemCount * resources.getDimension(R.dimen.main_search_view_height)).toInt()
         searchResult.layoutParams = recyclerLayoutParams
-    }
-
-    /**
-     * Hide hints result layout.
-     */
-    private fun hideHints() {
-        setSearchLayoutHeight()
-        searchDivider.visibility = GONE
     }
 }
