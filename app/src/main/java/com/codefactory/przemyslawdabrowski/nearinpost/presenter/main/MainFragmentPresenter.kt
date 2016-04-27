@@ -77,7 +77,6 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
      * @param machineUi InPost machine UI details.
      */
     fun showDetails(machineUi: MachineUi) {
-        //TODO : Implement proper.
-        navigator.navigateToMachineDetails(view.getActivityContext())
+        navigator.navigateToMachineDetails(view.getActivityContext(), machineUi)
     }
 }
