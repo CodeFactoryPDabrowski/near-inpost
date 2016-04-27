@@ -4,10 +4,11 @@
     <dimen name="main_under_search_view_height">72dp</dimen>
     <dimen name="main_search_view_height">56dp</dimen>
     <dimen name="common_half_margin">8dp</dimen>
-    <dimen name="main_search_location_icon_size">35dp</dimen>
+    <dimen name="main_search_location_icon_size">30dp</dimen>
     <dimen name="main_search_item_height">96dp</dimen>
     <dimen name="common_divider_size">1dp</dimen>
     <dimen name="custom_location_card_margin_bottom">4dp</dimen>
     <dimen name="common_standard_text_size">16sp</dimen>
     <dimen name="common_secondary_text_size">14sp</dimen>
+    <dimen name="machine_details_drag_distance">112dp</dimen>
 </resources>

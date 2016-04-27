@@ -13,9 +13,11 @@ import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.main.MainFragmentPresenter
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.main.MainFragmentView
+import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseFragment
 import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view.LocationSearchView
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.adapter.MainFragmentAdapter
+import com.codefactory.przemyslawdabrowski.nearinpost.view.main.adapter.MainFragmentHolder
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItem
 import javax.inject.Inject
 
@@ -62,6 +64,15 @@ class MainFragment : BaseFragment(), MainFragmentView {
         throw UnsupportedOperationException()
     }
 
+    override fun getActivityContext(): BaseActivity {
+        var activityContext = activity
+        if (activityContext is BaseActivity) {
+            return activityContext
+        } else {
+            throw IllegalArgumentException("All activities in application should extend BaseActivity!!!")
+        }
+    }
+
     /**
      * Initialize views.
      */
@@ -81,7 +92,12 @@ class MainFragment : BaseFragment(), MainFragmentView {
         findViews()
         searchResultList.layoutManager = LinearLayoutManager(activity)
         searchResultList.setHasFixedSize(true)
-        adapter = MainFragmentAdapter()
+        adapter = MainFragmentAdapter(object : MainFragmentHolder.MainFragmentHolderListener {
+            override fun onMachineClicked(machineUi: MachineUi) {
+                presenter.showDetails(machineUi)
+            }
+
+        })
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()

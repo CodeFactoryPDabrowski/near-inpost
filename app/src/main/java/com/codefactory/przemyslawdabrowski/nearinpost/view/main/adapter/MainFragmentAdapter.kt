@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItem
 
-class MainFragmentAdapter() : RecyclerView.Adapter<MainFragmentHolder>() {
+class MainFragmentAdapter(val listener: MainFragmentHolder.MainFragmentHolderListener) : RecyclerView.Adapter<MainFragmentHolder>() {
 
     /**
      * List of inPost items displayed on list view.
@@ -18,7 +18,7 @@ class MainFragmentAdapter() : RecyclerView.Adapter<MainFragmentHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MainFragmentHolder? {
-        return MainFragmentHolder(LayoutInflater.from(parent?.context).inflate(R.layout.main_fragment_holder, null))
+        return MainFragmentHolder(LayoutInflater.from(parent?.context).inflate(R.layout.main_fragment_holder, parent, false), listener)
     }
 
     override fun getItemCount(): Int = nearestInPostItemList.size

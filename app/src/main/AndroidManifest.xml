@@ -20,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Activity to display information about inPost machine-->
+        <activity
+            android:name=".view.machine_details.MachineDetailsActivity"
+            android:theme="@style/AppTheme.Translucent.BottomSheet" />
     </application>
 
 </manifest>

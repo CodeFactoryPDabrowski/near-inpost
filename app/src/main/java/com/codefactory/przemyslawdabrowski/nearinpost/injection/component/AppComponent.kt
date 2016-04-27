@@ -5,6 +5,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.ApiModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.AppModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.LocationModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.AppScope
+import com.codefactory.przemyslawdabrowski.nearinpost.navigation.Navigator
 import dagger.Component
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import retrofit2.Retrofit
@@ -26,5 +27,10 @@ interface AppComponent {
     /**
      * Provide location provider.
      */
-    fun locationProvide(): ReactiveLocationProvider
+    fun locationProvider(): ReactiveLocationProvider
+
+    /**
+     * Provide navigator object for navigation between activities.
+     */
+    fun navigator(): Navigator
 }
