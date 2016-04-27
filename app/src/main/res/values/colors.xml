@@ -9,4 +9,5 @@
     <color name="colorSecondaryText">#727272</color>
     <color name="colorScrim">#99323232</color>
     <color name="colorDisabledDark">#43000000</color>
+    <color name="colorMachineDetailsToolbar">#B3FFD600</color>
 </resources>

@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:dragDismissDistance="@dimen/machine_details_drag_distance">
-    //TODO: Implement layout.
-
-    <LinearLayout
+    <!--Child layout-->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
+        android:background="@color/colorWhite">
+        <!--Toolbar-->
+        <include layout="@layout/machine_details_toolbar" />
+    </FrameLayout>
 </com.codefactory.przemyslawdabrowski.nearinpost.view.custom.bottom_slide_layout.BottomSlideLayout>
