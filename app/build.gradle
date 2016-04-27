@@ -61,6 +61,7 @@ dependencies {
     compile appDependencies.recyclerView
     compile appDependencies.reactiveLocation
     compile appDependencies.serviceLocation
+    compile appDependencies.maps
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

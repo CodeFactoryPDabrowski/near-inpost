@@ -10,9 +10,14 @@ import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.bottom_slide_layout.BottomSlideLayout
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class MachineDetailsActivity : BaseActivity() {
-
+class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
 
         /**
@@ -52,6 +57,15 @@ class MachineDetailsActivity : BaseActivity() {
             machineUi = machine
         }
         initViews()
+        initMap()
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
+        // Add a marker in Sydney, Australia, and move the camera.
+        //TODO: Proper implementation
+        var sydney: LatLng = LatLng(-34.toDouble(), 151.toDouble());
+        p0?.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"));
+        p0?.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     /**
@@ -81,5 +95,13 @@ class MachineDetailsActivity : BaseActivity() {
         inPostName.text = machineUi.name
     }
 
+    /**
+     * Initialize map fragment.
+     */
+    private fun initMap() {
+        var inPostMap: SupportMapFragment = supportFragmentManager
+                .findFragmentById(R.id.machineDetailsLocation) as SupportMapFragment
+        inPostMap.getMapAsync(this)
+    }
 
 }

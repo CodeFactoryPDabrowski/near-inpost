@@ -19,6 +19,7 @@ ext {
     recyclerViewVersion = '23.0.1'
     reactiveLocationVersion = '0.8@aar'
     serviceLocationVersion = '8.1.0'
+    mapsVersion = '8.4.0'
 
     dependencies = [
             jUnitTest         : "junit:junit:$jUnitTestVersion",
@@ -42,5 +43,6 @@ ext {
             recyclerView      : "com.android.support:recyclerview-v7:$recyclerViewVersion",
             reactiveLocation  : "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
             serviceLocation   : "com.google.android.gms:play-services-location:$serviceLocationVersion",
+            maps              : "com.google.android.gms:play-services-maps:$mapsVersion",
     ]
 }

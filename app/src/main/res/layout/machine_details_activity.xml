@@ -10,6 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--Map fragment-->
+            <fragment
+                android:id="@+id/machineDetailsLocation"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/machine_details_map_height" />
+        </LinearLayout>
         <!--Toolbar-->
         <include layout="@layout/machine_details_toolbar" />
     </FrameLayout>
