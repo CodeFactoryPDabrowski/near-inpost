@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_nearest_in_post">Gdzie jest najbliższy paczkomat?</string>
+    <string name="machine_details_city_title">Miasto:</string>
+    <string name="machine_details_street_title">Ulica:</string>
+    <string name="machine_details_postal_code_title">Kod pocztowy:</string>
+    <string name="machine_details_location_desc_title">Opis lokalizacji:</string>
+    <string name="machine_details_empty_field">Brak</string>
 </resources>

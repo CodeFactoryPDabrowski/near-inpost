@@ -28,6 +28,7 @@
         android:layout_centerInParent="true"
         android:gravity="center_vertical"
         android:minHeight="?attr/actionBarSize"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/common_big_text_size"
         android:textStyle="bold" />
 </RelativeLayout>
