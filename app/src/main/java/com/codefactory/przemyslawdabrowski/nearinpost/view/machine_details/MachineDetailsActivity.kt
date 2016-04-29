@@ -58,7 +58,7 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
         if (savedInstanceState == null) {
             replaceFragment(R.id.machineDetailsContainer
-                    , MachineDetailsFragment(), MachineDetailsFragment.TAG).commit()
+                    , MachineDetailsFragment.newInstance(machineUi), MachineDetailsFragment.TAG).commit()
         }
         initViews()
         initMap()

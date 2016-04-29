@@ -6,4 +6,5 @@
     <string name="machine_details_postal_code_title">Postal code:</string>
     <string name="machine_details_location_desc_title">Location description:</string>
     <string name="machine_details_empty_field">No data</string>
+    <string name="machine_details_distance_from">Distance from</string>
 </resources>
