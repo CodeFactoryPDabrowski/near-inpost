@@ -6,7 +6,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.navigation.Navigator
-import com.codefactory.przemyslawdabrowski.nearinpost.presenter.Presenter
+import com.codefactory.przemyslawdabrowski.nearinpost.presenter.BasePresenter
 import d
 import retrofit2.Retrofit
 import rx.Subscription
@@ -15,7 +15,7 @@ import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 @FragmentScope
-class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigator: Navigator) : Presenter<MainFragmentView> {
+class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigator: Navigator) : BasePresenter<MainFragmentView>() {
 
     /**
      * Service for getting nearest InPost machines.
@@ -27,18 +27,9 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
     }
 
     /**
-     * View to manipulate by presenter.
-     */
-    private lateinit var view: MainFragmentView
-
-    /**
      * Subscription of retrofit observable.
      */
     private var subscription: Subscription? = null
-
-    override fun bind(view: MainFragmentView) {
-        this.view = view
-    }
 
     /**
      * Search nearest in post machines.
