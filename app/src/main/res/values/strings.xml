@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">NearInPost</string>
-    <string name="main_nearest_in_post">Where is nearest InPost?</string>
+    <string name="main_nearest_in_post">Find nearest InPost?</string>
     <string name="machine_details_city_title">City:</string>
     <string name="machine_details_street_title">Street:</string>
     <string name="machine_details_postal_code_title">Postal code:</string>
     <string name="machine_details_location_desc_title">Location description:</string>
     <string name="machine_details_empty_field">No data</string>
     <string name="machine_details_distance_from">Distance from</string>
+    <string name="custom_location_search_view_hint">Search for postal code or place</string>
 </resources>

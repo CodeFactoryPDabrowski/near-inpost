@@ -14,5 +14,6 @@
         <item name="android:textSize">@dimen/common_big_text_size</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:imeOptions">flagNoExtractUi</item>
+        <item name="android:hint">@string/custom_location_search_view_hint</item>
     </style>
 </resources>
