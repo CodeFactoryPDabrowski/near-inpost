@@ -14,8 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 
 class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
@@ -65,11 +64,23 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        // Add a marker in Sydney, Australia, and move the camera.
-        //TODO: Proper implementation
-        var sydney: LatLng = LatLng(-34.toDouble(), 151.toDouble());
-        p0?.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"));
-        p0?.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Disable interactions with map fragment.
+        fun disableMapInteraction() {
+            p0?.setOnMarkerClickListener { true }
+            var mapUISettings = p0?.uiSettings
+            if (mapUISettings != null) {
+                mapUISettings.setAllGesturesEnabled(false)
+            }
+        }
+
+        var inPostLocation: LatLng = LatLng((machineUi.latitude as Float).toDouble()
+                , (machineUi.longitude as Float).toDouble());
+        p0?.addMarker(MarkerOptions().icon(BitmapDescriptorFactory
+                .fromResource(R.drawable.machine_details_loc_icon))
+                .anchor(1F, 1F)
+                .position(inPostLocation))
+        p0?.animateCamera(CameraUpdateFactory.newLatLngZoom(inPostLocation, 15F))
+        disableMapInteraction()
     }
 
     /**
