@@ -16,4 +16,13 @@
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:hint">@string/custom_location_search_view_hint</item>
     </style>
+
+    <!--TODO: Prepare app for previous Android versions-->
+    <!--Location view holder layout style-->
+    <style name="CustomLocationHolderLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/main_search_view_height</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

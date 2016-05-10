@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/customLocationViewHolderLayout"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/main_search_view_height"
-    android:background="@drawable/custom_location_search_view_ripple"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+    style="@style/CustomLocationHolderLayoutStyle">
 
     <TextView
         android:id="@+id/customLocationViewHolderTitle"

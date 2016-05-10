@@ -135,7 +135,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        if (dragView != null && (dragView as View).isLaidOut) {
+        if (dragView != null && ViewCompat.isLaidOut(dragView as View)) {
             dragViewLeft = (dragView as View).left
             dragViewTop = (dragView as View).top
             dragViewBottom = (dragView as View).bottom
