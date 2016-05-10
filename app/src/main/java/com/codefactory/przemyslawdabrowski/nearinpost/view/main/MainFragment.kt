@@ -19,8 +19,10 @@ import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_searc
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.adapter.MainFragmentAdapter
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.adapter.MainFragmentHolder
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItem
+import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItemType
 import javax.inject.Inject
 
+//TODO: Fragment shouldnt restart fragment after orientation change!!!
 class MainFragment : BaseFragment(), MainFragmentView {
     companion object {
         /**
@@ -55,7 +57,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onNearestInPostResult(machines: List<Machine>) {
-        var items = machines.map { MachineItem(MachineUi(it)) }
+        var items = if (machines.size > 0) machines.map { MachineItem(MachineUi(it)) } else listOf(MachineItem(null, MachineItemType.EMPTY))
         adapter.addInPostItemList(items)
     }
 
@@ -98,6 +100,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
             }
 
         })
+        adapter.addInPostItemList(listOf(MachineItem(null, MachineItemType.FRESH_START)))
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()

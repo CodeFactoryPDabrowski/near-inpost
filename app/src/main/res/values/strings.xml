@@ -8,4 +8,6 @@
     <string name="machine_details_empty_field">No data</string>
     <string name="machine_details_distance_from">Distance from</string>
     <string name="custom_location_search_view_hint">Search for postal code or place</string>
+    <string name="main_fragment_empty_text">No results, try something else :(</string>
+    <string name="main_fragment_fresh_text">Nothing was searching</string>
 </resources>

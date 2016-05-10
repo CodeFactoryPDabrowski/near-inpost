@@ -9,5 +9,5 @@ import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 data class MachineItem(val item: MachineUi?, val itemType: MachineItemType = MachineItemType.ITEM)
 
 enum class MachineItemType {
-    ITEM, EMPTY
+    ITEM, EMPTY, FRESH_START
 }

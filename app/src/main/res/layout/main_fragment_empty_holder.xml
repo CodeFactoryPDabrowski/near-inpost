@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/main_search_item_height">
+
+    <TextView
+        android:id="@+id/mainDisplayedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="@dimen/common_default_margin"
+        android:layout_marginStart="@dimen/common_default_margin"
+        android:text="@string/main_fragment_empty_text"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/common_standard_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_divider_size"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorSearchDivider" />
+
+</RelativeLayout>
