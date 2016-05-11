@@ -8,6 +8,7 @@ import android.widget.TextView
 import butterknife.bindView
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.bottom_slide_layout.BottomSlideLayout
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,13 +26,20 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         val MACHINE_DETAILS_BUNDLE_KEY = "machine_details"
 
         /**
+         * Key for postal code.
+         */
+        val POSTAL_CODE_BUNDLE_KEY = "postal_code"
+
+        /**
          * Start this activity static factory method.
          * @param activity Activity context.
          * @param machineUi Machine details.
+         * @param postalCodeUi Searched postal code.
          */
-        fun newInstance(activity: BaseActivity, machineUi: MachineUi) {
+        fun startActivity(activity: BaseActivity, machineUi: MachineUi, postalCodeUi: PostalCodeUi) {
             var intent: Intent = Intent(activity, MachineDetailsActivity::class.java)
             intent.putExtra(MACHINE_DETAILS_BUNDLE_KEY, machineUi)
+            intent.putExtra(POSTAL_CODE_BUNDLE_KEY, postalCodeUi)
             activity.startActivity(intent)
         }
     }
@@ -55,9 +63,12 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         } else {
             machineUi = machine
         }
+        var postalCodeUi: PostalCodeUi? = intent.getParcelableExtra<PostalCodeUi>(POSTAL_CODE_BUNDLE_KEY) ?:
+                throw IllegalArgumentException("Machine details cannot be null")
+
         if (savedInstanceState == null) {
             replaceFragment(R.id.machineDetailsContainer
-                    , MachineDetailsFragment.newInstance(machineUi), MachineDetailsFragment.TAG).commit()
+                    , MachineDetailsFragment.newInstance(machineUi, postalCodeUi!!.postalCode), MachineDetailsFragment.TAG).commit()
         }
         initViews()
         initMap()

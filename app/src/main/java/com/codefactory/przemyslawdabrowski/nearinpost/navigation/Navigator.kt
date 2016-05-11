@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.navigation
 
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.AppScope
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.machine_details.MachineDetailsActivity
 import javax.inject.Inject
@@ -14,8 +15,9 @@ class Navigator @Inject constructor() {
      *
      * @param activity Activity to start new activity.
      * @param machineUi Machine InPost details.
+     * @param postalCodeUi Searched postal code.
      */
-    fun navigateToMachineDetails(activity: BaseActivity, machineUi: MachineUi) {
-        MachineDetailsActivity.newInstance(activity, machineUi)
+    fun navigateToMachineDetails(activity: BaseActivity, machineUi: MachineUi, postalCodeUi: PostalCodeUi) {
+        MachineDetailsActivity.startActivity(activity, machineUi, postalCodeUi)
     }
 }

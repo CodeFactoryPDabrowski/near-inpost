@@ -1,25 +1,26 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.presenter.machine_details
 
+import android.os.Bundle
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentScope
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.BasePresenter
+import com.codefactory.przemyslawdabrowski.nearinpost.view.machine_details.MachineDetailsFragment
 import javax.inject.Inject
 
 @FragmentScope
 class MachineDetailsFragmentPresenter @Inject constructor() : BasePresenter<MachineDetailsFragmentView>() {
 
     /**
-     * Details of displayed machine.
-     */
-    lateinit var machineDetails: MachineUi
-
-    /**
      * Set details of machine.
-     * @param machineUi InPost machine details.
+     * @param arguments Bundle that should contain inPost machine details.
      */
-    fun setDetails(machineUi: MachineUi) {
-        machineDetails = machineUi
-        view.showDetails(machineDetails)
+    fun setDetails(arguments: Bundle) {
+        var machineDetails: MachineUi? = arguments.getParcelable<MachineUi>(MachineDetailsFragment.MACHINE_DETAILS_KEY) ?:
+                throw IllegalArgumentException("Machine details cannot be null")
+        var postalCode = arguments.getString(MachineDetailsFragment.POSTAL_CODE_KEY) ?:
+                throw IllegalArgumentException("Postal code cannot be null")
+
+        view.showDetails(postalCode, machineDetails!!)
     }
 
 }

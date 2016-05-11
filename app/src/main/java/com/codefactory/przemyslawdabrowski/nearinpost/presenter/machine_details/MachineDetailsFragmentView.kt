@@ -7,5 +7,5 @@ interface MachineDetailsFragmentView {
     /**
      * Show details of in post machine.
      */
-    fun showDetails(machineDetails: MachineUi)
+    fun showDetails(postalCode: String, machineDetails: MachineUi)
 }

@@ -24,10 +24,16 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
          */
         val MACHINE_DETAILS_KEY = "machine_details_key"
 
-        fun newInstance(machineUi: MachineUi): MachineDetailsFragment {
+        /**
+         * Key for postal code.
+         */
+        val POSTAL_CODE_KEY = "postal_code_key"
+
+        fun newInstance(machineUi: MachineUi, postalCode: String): MachineDetailsFragment {
             var fragment = MachineDetailsFragment()
             var args: Bundle = Bundle()
             args.putParcelable(MACHINE_DETAILS_KEY, machineUi)
+            args.putString(POSTAL_CODE_KEY, postalCode)
             fragment.arguments = args
 
             return fragment
@@ -39,7 +45,7 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
     lateinit var distance: TextView
     lateinit var city: TextView
     lateinit var street: TextView
-    lateinit var postalCode: TextView
+    lateinit var postalCodeTextView: TextView
     lateinit var locationDescription: TextView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,14 +54,13 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
         return view
     }
 
-    override fun showDetails(machineDetails: MachineUi) {
-        //TODO: Display search postal code!!!
+    override fun showDetails(postalCode: String, machineDetails: MachineUi) {
         var empty = activity.resources.getString(R.string.machine_details_empty_field)
         var distanceFrom = activity.resources.getString(R.string.machine_details_distance_from)
-        distance.text = "$distanceFrom 'Search Postal Code' -> ${machineDetails.distance ?: empty} Km"
+        distance.text = "$distanceFrom '$postalCode' -> ${machineDetails.distance ?: empty} Km"
         city.text = machineDetails.town ?: empty
         street.text = "${machineDetails.street ?: empty}  ${machineDetails.buildingNumber ?: ""}"
-        postalCode.text = machineDetails.postcode ?: empty
+        postalCodeTextView.text = machineDetails.postcode ?: empty
         locationDescription.text = machineDetails.locationDescription ?: empty
     }
 
@@ -71,15 +76,12 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
             distance = view.findViewById(R.id.machineDetailsDistance) as TextView
             city = view.findViewById(R.id.machineDetailsCity) as TextView
             street = view.findViewById(R.id.machineDetailsStreet) as TextView
-            postalCode = view.findViewById(R.id.machineDetailsPostalCode) as TextView
+            postalCodeTextView = view.findViewById(R.id.machineDetailsPostalCode) as TextView
             locationDescription = view.findViewById(R.id.machineDetailsLocationDesc) as TextView
         }
         initComponent().inject(this)
         presenter.bind(this)
         findViews()
-        var machineDetails: MachineUi? =
-                arguments.getParcelable<MachineUi>(MACHINE_DETAILS_KEY) ?:
-                        throw IllegalArgumentException("Machine details cannot be null")
-        presenter.setDetails(machineDetails as MachineUi)
+        presenter.setDetails(arguments)
     }
 }

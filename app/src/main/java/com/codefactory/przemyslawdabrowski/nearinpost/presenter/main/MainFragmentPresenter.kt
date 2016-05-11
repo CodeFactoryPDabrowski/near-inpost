@@ -66,8 +66,9 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
     /**
      * Show details of in post machine.
      * @param machineUi InPost machine UI details.
+     * @param postalCodeUi Postal code.
      */
-    fun showDetails(machineUi: MachineUi) {
-        navigator.navigateToMachineDetails(view.getActivityContext(), machineUi)
+    fun showDetails(machineUi: MachineUi, postalCodeUi: PostalCodeUi) {
+        navigator.navigateToMachineDetails(view.getActivityContext(), machineUi, postalCodeUi)
     }
 }

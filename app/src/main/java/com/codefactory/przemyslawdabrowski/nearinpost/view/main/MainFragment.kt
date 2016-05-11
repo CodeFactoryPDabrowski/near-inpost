@@ -108,7 +108,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
         searchResultList.setHasFixedSize(true)
         adapter = MainFragmentAdapter(object : MainFragmentHolder.MainFragmentHolderListener {
             override fun onMachineClicked(machineUi: MachineUi) {
-                presenter.showDetails(machineUi)
+                if (postalCode == null) {
+                    throw IllegalArgumentException("Postal code shouldn't be null")
+                }
+                presenter.showDetails(machineUi, postalCode as PostalCodeUi)
             }
 
         })
