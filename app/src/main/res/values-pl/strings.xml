@@ -10,4 +10,5 @@
     <string name="custom_location_search_view_hint">Wpisz kod pocztowy lub miejsce</string>
     <string name="main_fragment_empty_text">Brak wyników, spróbuj ponownie :(</string>
     <string name="main_fragment_fresh_text">Jeszcze nic nie szukałeś</string>
+    <string name="main_fragment_postal_code_text">Wyniki dla kodu pocztowego</string>
 </resources>

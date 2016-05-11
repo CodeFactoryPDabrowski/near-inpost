@@ -1,13 +1,12 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.main.item
 
-import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
-
 /**
- * @param item Item to display on search nearest inPost list view.
+ * @param itemData Data to display on search result list.
  * @param itemType Type of item displayed on list view.
  */
-data class MachineItem(val item: MachineUi?, val itemType: MachineItemType = MachineItemType.ITEM)
+data class MachineItem(val itemData: ItemData? = null
+                       , val itemType: MachineItemType = MachineItemType.ITEM)
 
 enum class MachineItemType {
-    ITEM, EMPTY, FRESH_START
+    ITEM, EMPTY, FRESH_START, POSTAL_CODE
 }

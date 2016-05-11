@@ -10,4 +10,5 @@
     <string name="custom_location_search_view_hint">Search for postal code or place</string>
     <string name="main_fragment_empty_text">No results, try something else :(</string>
     <string name="main_fragment_fresh_text">Nothing was searching</string>
+    <string name="main_fragment_postal_code_text">Results for postal code</string>
 </resources>

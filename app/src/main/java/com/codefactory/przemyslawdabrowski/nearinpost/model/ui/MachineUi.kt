@@ -3,6 +3,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.model.ui
 import android.os.Parcel
 import android.os.Parcelable
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
+import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.ItemData
 
 data class MachineUi(val name: String?
                      , val postcode: String?
@@ -12,7 +13,7 @@ data class MachineUi(val name: String?
                      , val latitude: Float?
                      , val longitude: Float?
                      , val distance: Double?
-                     , val locationDescription: String?) : Parcelable {
+                     , val locationDescription: String?) : Parcelable, ItemData {
 
     /**
      * Secondary constructor.

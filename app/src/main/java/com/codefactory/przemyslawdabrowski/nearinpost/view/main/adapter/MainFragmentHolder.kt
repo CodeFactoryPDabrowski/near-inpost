@@ -32,11 +32,11 @@ class MainFragmentHolder(itemView: View?, listener: MainFragmentHolderListener) 
     }
 
     override fun bindItem(it: MachineItem) {
-        if (it.item != null) {
-            machineUI = it.item
-            machineName.text = it.item.name
-            machineStreet.text = it.item.street
-            machineDistance.text = it.item.distance.toString()
+        if (it.itemData != null && it.itemData is MachineUi) {
+            machineUI = it.itemData
+            machineName.text = (machineUI as MachineUi).name
+            machineStreet.text = (machineUI as MachineUi).street
+            machineDistance.text = (machineUI as MachineUi).distance.toString()
         }
     }
 

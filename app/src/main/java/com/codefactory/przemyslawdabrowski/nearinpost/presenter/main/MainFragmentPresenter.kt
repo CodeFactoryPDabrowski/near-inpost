@@ -47,8 +47,8 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     paczkomaty ->
-                    paczkomaty.machine?.let { view.onNearestInPostResult(paczkomaty.machine  as List<Machine>) }
-                            ?: view.onNearestInPostResult(emptyList())
+                    paczkomaty.machine?.let { view.onNearestInPostResult(postalCodeUi, paczkomaty.machine  as List<Machine>) }
+                            ?: view.onNearestInPostResult(postalCodeUi, emptyList())
                 }, {
                     error ->
                     d { "some error ${error.message}" }

@@ -16,7 +16,11 @@ class MainFragmentAdapter(val listener: MainFragmentHolder.MainFragmentHolderLis
     var nearestInPostItemList: List<MachineItem> = emptyList()
 
     override fun onBindViewHolder(holder: BaseHolder<MachineItem>?, position: Int) {
+        //TODO: Simplify?
         if (holder != null && holder is MainFragmentHolder) {
+            holder.bindItem(nearestInPostItemList[position])
+        } else if (holder != null && holder is MainFragmentDisplayTextHolder
+                && nearestInPostItemList[position].itemType == MachineItemType.POSTAL_CODE) {
             holder.bindItem(nearestInPostItemList[position])
         }
     }
@@ -30,6 +34,8 @@ class MainFragmentAdapter(val listener: MainFragmentHolder.MainFragmentHolderLis
                 return MainFragmentDisplayTextHolder(R.string.main_fragment_empty_text, parent)
             MachineItemType.FRESH_START.ordinal ->
                 return MainFragmentDisplayTextHolder(R.string.main_fragment_fresh_text, parent)
+            MachineItemType.POSTAL_CODE.ordinal ->
+                return MainFragmentDisplayTextHolder(parent)
             else
             -> throw IllegalArgumentException("Unknown view type $viewType")
         }

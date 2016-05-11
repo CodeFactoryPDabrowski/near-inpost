@@ -40,6 +40,11 @@ class MainFragment : BaseFragment(), MainFragmentView {
     private lateinit var consumerView: View
 
     /**
+     * Postal code fir searched in post machines.
+     */
+    private var postalCode: PostalCodeUi? = null
+
+    /**
      * Adapter to provide search query results views for recyclerView.
      */
     private lateinit var adapter: MainFragmentAdapter
@@ -56,8 +61,15 @@ class MainFragment : BaseFragment(), MainFragmentView {
         presenter.onDestroyView()
     }
 
-    override fun onNearestInPostResult(machines: List<Machine>) {
-        var items = if (machines.size > 0) machines.map { MachineItem(MachineUi(it)) } else listOf(MachineItem(null, MachineItemType.EMPTY))
+    override fun onNearestInPostResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
+        var items = emptyList<MachineItem>()
+        if (machines.size > 0) {
+            postalCode = postalCodeUi
+            items += MachineItem(postalCodeUi, MachineItemType.POSTAL_CODE)
+            items += machines.map { MachineItem(MachineUi(it)) }
+        } else {
+            items += listOf(MachineItem(itemType = MachineItemType.EMPTY))
+        }
         adapter.addInPostItemList(items)
     }
 
@@ -100,7 +112,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
             }
 
         })
-        adapter.addInPostItemList(listOf(MachineItem(null, MachineItemType.FRESH_START)))
+        adapter.addInPostItemList(listOf(MachineItem(itemType = MachineItemType.FRESH_START)))
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()
