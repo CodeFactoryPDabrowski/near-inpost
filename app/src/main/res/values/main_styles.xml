@@ -25,4 +25,11 @@
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <!--Main fragment view holder layout style-->
+    <style name="MainFragmentHolderLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/main_fragment_holder_selector</item>
+    </style>
 </resources>
