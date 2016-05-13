@@ -3,6 +3,8 @@
     package="com.codefactory.przemyslawdabrowski.nearinpost">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
     <application
         android:name=".app.App"
         android:allowBackup="true"

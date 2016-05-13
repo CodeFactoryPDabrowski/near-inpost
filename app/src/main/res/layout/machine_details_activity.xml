@@ -14,12 +14,12 @@
         android:orientation="vertical">
         <!--Toolbar-->
         <include layout="@layout/machine_details_toolbar" />
-        <!--Map fragment-->
-        <fragment
-            android:id="@+id/machineDetailsLocation"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <!--Map fragment container-->
+        <FrameLayout
+            android:id="@+id/machineDetailsLocationContainer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/machine_details_map_height" />
+            android:layout_height="@dimen/machine_details_map_height"
+            android:background="@color/colorSearchResultCard" />
 
         <FrameLayout
             android:id="@+id/machineDetailsContainer"

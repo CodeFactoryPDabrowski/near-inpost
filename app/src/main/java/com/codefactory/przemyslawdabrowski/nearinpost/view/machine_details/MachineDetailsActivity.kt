@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.view.machine_details
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.Toolbar
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,6 +12,8 @@ import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.bottom_slide_layout.BottomSlideLayout
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -19,6 +22,11 @@ import com.google.android.gms.maps.model.*
 
 class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
+
+        /**
+         * Delay of initialization support map fragment.
+         */
+        val MAP_INIT_DELAY = 500L //ms
 
         /**
          * Key for machine UI details.
@@ -90,7 +98,7 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 .fromResource(R.drawable.machine_details_loc_icon))
                 .anchor(1F, 1F)
                 .position(inPostLocation))
-        p0?.animateCamera(CameraUpdateFactory.newLatLngZoom(inPostLocation, 15F))
+        p0?.moveCamera(CameraUpdateFactory.newLatLngZoom(inPostLocation, 15F))
         disableMapInteraction()
     }
 
@@ -125,9 +133,17 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
      * Initialize map fragment.
      */
     private fun initMap() {
-        var inPostMap: SupportMapFragment = supportFragmentManager
-                .findFragmentById(R.id.machineDetailsLocation) as SupportMapFragment
-        inPostMap.getMapAsync(this)
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) != ConnectionResult.SUCCESS) {
+            return
+        }
+        Handler().postDelayed({
+            if (!isFinishing) {
+                var inPostMapFragment = SupportMapFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.machineDetailsLocationContainer,
+                        inPostMapFragment).commit()
+                inPostMapFragment.getMapAsync(this)
+            }
+        }, MAP_INIT_DELAY)
     }
 
 }
