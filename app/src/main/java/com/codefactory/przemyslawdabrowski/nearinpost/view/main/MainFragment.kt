@@ -22,7 +22,6 @@ import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItem
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItemType
 import javax.inject.Inject
 
-//TODO: Fragment shouldnt restart fragment after orientation change!!!
 class MainFragment : BaseFragment(), MainFragmentView {
     companion object {
         /**
@@ -49,9 +48,16 @@ class MainFragment : BaseFragment(), MainFragmentView {
      */
     private lateinit var adapter: MainFragmentAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initComponent().inject(this)
+        presenter.bind(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.main_fragment, container, false);
         initViews(view)
+        presenter.onCreateView()
 
         return view
     }
@@ -101,8 +107,6 @@ class MainFragment : BaseFragment(), MainFragmentView {
             searchResultList = view.findViewById(R.id.mainInPostSearchResultList) as RecyclerView
             consumerView = view.findViewById(R.id.mainEventConsumerView)
         }
-        initComponent().inject(this)
-        presenter.bind(this)
         findViews()
         searchResultList.layoutManager = LinearLayoutManager(activity)
         searchResultList.setHasFixedSize(true)

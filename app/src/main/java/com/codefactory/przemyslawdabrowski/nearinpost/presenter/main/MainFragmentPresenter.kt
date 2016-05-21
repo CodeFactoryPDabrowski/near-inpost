@@ -22,6 +22,17 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
      */
     lateinit var nearestMachineService: NearestMachinesService
 
+    /**
+     * TODO: create common object for list of machines and postal code UI
+     * List of cached last near in post machines response.
+     */
+    var nearInPostMachinesCache: List<Machine>? = null
+
+    /**
+     * Cached searched last postal code.
+     */
+    var postalCodeUiCache: PostalCodeUi? = null
+
     init {
         nearestMachineService = retrofit.create(NearestMachinesService::class.java)
     }
@@ -47,13 +58,28 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit, val navigato
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     paczkomaty ->
-                    paczkomaty.machine?.let { view.onNearestInPostResult(postalCodeUi, paczkomaty.machine  as List<Machine>) }
-                            ?: view.onNearestInPostResult(postalCodeUi, emptyList())
+                    postalCodeUiCache = postalCodeUi
+                    if (paczkomaty.machine != null) {
+                        nearInPostMachinesCache = paczkomaty.machine
+                        view.onNearestInPostResult(postalCodeUi, paczkomaty.machine  as List<Machine>)
+                    } else {
+                        nearInPostMachinesCache = emptyList()
+                        view.onNearestInPostResult(postalCodeUi, emptyList())
+                    }
                 }, {
                     error ->
                     d { "some error ${error.message}" }
                     view.onNearestInPostError(error)
                 })
+    }
+
+    /**
+     * Create view callback of host fragment.
+     */
+    fun onCreateView() {
+        if (nearInPostMachinesCache != null && postalCodeUiCache != null) {
+            view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, nearInPostMachinesCache as List<Machine>)
+        }
     }
 
     /**
