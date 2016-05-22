@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.view.main
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.WindowManager
 import butterknife.bindView
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
@@ -29,5 +30,6 @@ class MainActivity : BaseActivity() {
             actionBar.setDisplayHomeAsUpEnabled(false)
             actionBar.setDisplayShowTitleEnabled(false)
         }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
 }

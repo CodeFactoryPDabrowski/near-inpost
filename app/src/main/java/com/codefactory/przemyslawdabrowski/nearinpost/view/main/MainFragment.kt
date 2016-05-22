@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.codefactory.przemyslawdabrowski.nearinpost.R
+import com.codefactory.przemyslawdabrowski.nearinpost.extension.hideKeyboard
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
@@ -85,7 +86,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun getActivityContext(): BaseActivity {
-        var activityContext = activity
+        val activityContext = activity
         if (activityContext is BaseActivity) {
             return activityContext
         } else {
@@ -123,6 +124,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()
+            hideKeyboard(searchView.search.windowToken)
             presenter.searchForNearestInPost(searchView.getPostalCode())
         }
         consumerView.setOnTouchListener { view, motionEvent ->
