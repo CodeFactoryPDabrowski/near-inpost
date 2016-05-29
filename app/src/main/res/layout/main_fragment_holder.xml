@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainFragmentHolderLayout"
     style="@style/MainFragmentHolderLayoutStyle">
     <!--TODO: Set font colors, style this.-->
@@ -10,7 +11,7 @@
         android:layout_height="@dimen/main_search_location_icon_size"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/main_search_result_machine_location" />
+        app:srcCompat="@drawable/main_search_result_machine_location" />
 
     <LinearLayout
         android:layout_width="match_parent"
