@@ -150,8 +150,12 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
             return false
         }
         if (ev != null) {
-            return isDraggableViewUnder(ev.x.toInt(), ev.y.toInt())
-                    && (viewDragHelper.shouldInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev))
+            if (scrollingChild != null && viewDragHelper.isViewUnder(scrollingChild, ev.x.toInt(), ev.y.toInt())) {
+                return super.onInterceptTouchEvent(ev)
+            } else {
+                return isDraggableViewUnder(ev.x.toInt(), ev.y.toInt())
+                        && (viewDragHelper.shouldInterceptTouchEvent(ev) || super.onInterceptTouchEvent(ev))
+            }
         } else {
             return super.onInterceptTouchEvent(ev)
         }
@@ -210,7 +214,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
         // check if we should perform a dismiss or settle back into place
         val dismiss = lastNestedScrollWasDownward && dragDisplacement >= dragDismissDistance
         // animate either back into place or to bottom
-        var settleAnim = ObjectAnimator.ofInt(dragViewOffsetHelper,
+        val settleAnim = ObjectAnimator.ofInt(dragViewOffsetHelper,
                 ViewOffsetHelper.OFFSET_Y,
                 (dragView as View).top,
                 if (dismiss) dragViewBottom else dragViewTop)
@@ -277,15 +281,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
      */
     private var dragHelperCallbacks: ViewDragHelper.Callback = object : ViewDragHelper.Callback() {
 
-        override fun tryCaptureView(child: View?, pointerId: Int): Boolean {
-            // if we have a scrolling child and it can scroll then don't drag, it'll be handled
-            // by nested scrolling
-            var childCanScroll: Boolean = scrollingChild != null
-                    && ((scrollingChild as View).canScrollVertically(1)
-                    || (scrollingChild as View).canScrollVertically(-1))
-
-            return !childCanScroll
-        }
+        override fun tryCaptureView(child: View?, pointerId: Int): Boolean = child == dragView
 
         override fun clampViewPositionVertical(child: View?, top: Int, dy: Int): Int {
             return Math.min(Math.max(top, dragViewTop), dragViewBottom)

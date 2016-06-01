@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:dragDismissDistance="@dimen/machine_details_drag_distance"
-    app:scrollingChild="@+id/machineDetailsScrollChild">
+    app:scrollingChild="@+id/machineDetailsContainer">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
