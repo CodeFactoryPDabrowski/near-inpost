@@ -6,25 +6,39 @@
     android:layout_height="match_parent"
     app:dragDismissDistance="@dimen/machine_details_drag_distance"
     app:scrollingChild="@+id/machineDetailsScrollChild">
-    <!--Child layout-->
-    <LinearLayout
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
-        <!--Toolbar-->
-        <include layout="@layout/machine_details_toolbar" />
-        <!--Map fragment container-->
-        <FrameLayout
-            android:id="@+id/machineDetailsLocationContainer"
+        android:layout_height="match_parent">
+        <!--Child layout-->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/machine_details_map_height"
-            android:background="@color/colorSearchResultCard" />
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+            <!--Toolbar-->
+            <include layout="@layout/machine_details_toolbar" />
+            <!--Map fragment container-->
+            <FrameLayout
+                android:id="@+id/machineDetailsLocationContainer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/machine_details_map_height"
+                android:background="@color/colorSearchResultCard" />
 
-        <FrameLayout
-            android:id="@+id/machineDetailsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/machineDetailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/machineDetailsDirectionFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/common_default_margin"
+            app:fabSize="normal"
+            app:layout_anchor="@+id/machineDetailsLocationContainer"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@drawable/machine_details_direction_icon" />
+    </android.support.design.widget.CoordinatorLayout>
 </com.codefactory.przemyslawdabrowski.nearinpost.view.custom.bottom_slide_layout.BottomSlideLayout>

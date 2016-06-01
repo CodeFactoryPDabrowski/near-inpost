@@ -1,11 +1,15 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.machine_details
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import butterknife.bindView
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
@@ -18,7 +22,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
@@ -55,7 +61,8 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     val toolbar: Toolbar by bindView(R.id.machineDetailsToolbar)
     val closeButton: ImageView by bindView(R.id.machineDetailsClose)
     val inPostName: TextView by bindView(R.id.machineDetailsName)
-    lateinit var bottomSlideLayout: BottomSlideLayout
+    val bottomSlideLayout: BottomSlideLayout by bindView(R.id.machineDetailsSlideLayout)
+    val directionFab: FloatingActionButton by bindView(R.id.machineDetailsDirectionFab)
 
     /**
      * Object to displays details.
@@ -115,7 +122,6 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
             }
         }
         setUpToolbar()
-        bottomSlideLayout = findViewById(R.id.machineDetailsSlideLayout) as BottomSlideLayout
         bottomSlideLayout.addListener(object : BottomSlideLayout.Listener {
             override fun onDragDismissed() {
                 finish()
@@ -126,6 +132,18 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
             }
         })
         closeButton.setOnClickListener { view -> finish() }
+        directionFab.setOnClickListener { view ->
+            val lat = machineUi.latitude
+            val long = machineUi.longitude
+            val encodedQuery = Uri.encode("$lat,$long(${machineUi.name})")
+            val directionIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:$lat,$long?q=$encodedQuery"))
+            try {
+                startActivity(directionIntent)
+            } catch(e: ActivityNotFoundException) {
+                //TODO: Should be from resources
+                Toast.makeText(this, "Install map app", Toast.LENGTH_SHORT).show()
+            }
+        }
         inPostName.text = machineUi.name
     }
 
