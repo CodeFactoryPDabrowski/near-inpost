@@ -131,9 +131,15 @@ class MainFragment : BaseFragment(), MainFragmentView {
             searchView.hideHints()
             false
         }
-        searchView.setResultListener(object : LocationSearchView.LocationResultListener {
+        searchView.setResultListener(object : LocationSearchView.LocationSearchView.LocationResultListener {
             override fun onResultClick(postalCodeUi: PostalCodeUi) {
                 presenter.searchForNearestInPost(postalCodeUi)
+            }
+        })
+
+        searchView.setCurrentLocationListener(object : LocationSearchView.LocationSearchView.CurrentLocationListener {
+            override fun onCurrentLocationClick() {
+                throw UnsupportedOperationException()
             }
         })
     }

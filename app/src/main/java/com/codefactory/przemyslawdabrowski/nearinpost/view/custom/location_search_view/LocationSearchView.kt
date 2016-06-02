@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.Toast
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerFragmentComponent
@@ -71,7 +70,12 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     /**
      * Listener of search results.
      */
-    private var resultListener: LocationResultListener? = null
+    private var resultListener: LocationSearchView.LocationResultListener? = null
+
+    /**
+     * Listener for current location click.
+     */
+    private var currentLocationListener: LocationSearchView.CurrentLocationListener? = null
 
     constructor(context: Context) : this(context, null)
 
@@ -88,7 +92,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         adapter = LocationSearchAdapter(object : LocationSearchHolder.LocationSearchHolderListener {
             override fun onResultClick(postalCodeUi: PostalCodeUi) {
                 hideHints()
-                resultListener?.let { (resultListener as LocationResultListener).onResultClick(postalCodeUi) }
+                resultListener?.onResultClick(postalCodeUi)
             }
 
         })
@@ -111,24 +115,40 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
             }
         })
 
-        //TODO: Search for current location.
-        currentLocation.setOnClickListener { view -> Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show() }
+        currentLocation.setOnClickListener { view -> currentLocationListener?.onCurrentLocationClick() }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         subscription?.unsubscribe()
+        if (resultListener != null) {
+            resultListener = null
+        }
+        if (currentLocationListener != null) {
+            currentLocationListener = null
+        }
     }
 
     /**
      * Set listener to handle search result click.
      * @param listener Listener to handle results.
      */
-    fun setResultListener(listener: LocationResultListener) {
+    fun setResultListener(listener: LocationSearchView.LocationResultListener) {
         if (resultListener != null) {
             resultListener = null
         }
         resultListener = listener
+    }
+
+    /**
+     * Set listener to handle current location click.
+     * @param listener Listener to handle click on current location.
+     */
+    fun setCurrentLocationListener(listener: LocationSearchView.CurrentLocationListener) {
+        if (currentLocationListener != null) {
+            currentLocationListener = null
+        }
+        currentLocationListener = listener
     }
 
     /**
@@ -187,14 +207,31 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     }
 
     /**
-     * Listener to handle search results.
+     * Common interface for all location search view listeners.
      */
-    interface LocationResultListener {
+    interface LocationSearchView {
 
         /**
-         * Click on result action.
-         *@param postalCodeUi Postal code object.
+         * Listener to handle search results.
          */
-        fun onResultClick(postalCodeUi: PostalCodeUi)
+        interface LocationResultListener {
+
+            /**
+             * Click on result action.
+             *@param postalCodeUi Postal code object.
+             */
+            fun onResultClick(postalCodeUi: PostalCodeUi)
+        }
+
+        /**
+         * Listener to handle click on search for current location.
+         */
+        interface CurrentLocationListener {
+
+            /**
+             * Click on current location button.
+             */
+            fun onCurrentLocationClick()
+        }
     }
 }
