@@ -7,7 +7,6 @@ import android.os.IBinder
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.view.inputmethod.InputMethodManager
-import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseFragment
 
@@ -22,22 +21,20 @@ fun BaseFragment.hideKeyboard(windowToken: IBinder) {
     }
 }
 
-//TODO: Use it.
 /**
  * Check if permissions are given.
  * @param permissions Permissions to check.
  * @param requestCode Request code of permission check.
  * @param permissionsGranted Block execute if permissions are granted.
  */
-fun BaseFragment.givenPermission(permissions: Array<String>, requestCode: Int, permissionsGranted: () -> Unit) {
+inline fun BaseFragment.givenPermission(permissions: Array<String>, requestCode: Int, crossinline permissionsGranted: () -> Unit) {
     if (activity == null) {
         return
     }
     if (activity !is BaseActivity) {
         throw IllegalArgumentException("Application should use only BaseActivity class, error class: ${activity.toString()}")
     }
-
-    if (BuildConfig.VERSION_CODE >= Build.VERSION_CODES.M) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         if (arePermissionsGranted(activity as BaseActivity, permissions)) {
             permissionsGranted()
         } else {

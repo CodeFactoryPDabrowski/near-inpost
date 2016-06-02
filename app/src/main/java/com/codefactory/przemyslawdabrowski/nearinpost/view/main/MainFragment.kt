@@ -1,5 +1,7 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.main
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
@@ -7,7 +9,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.codefactory.przemyslawdabrowski.nearinpost.R
+import com.codefactory.przemyslawdabrowski.nearinpost.extension.givenPermission
 import com.codefactory.przemyslawdabrowski.nearinpost.extension.hideKeyboard
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
@@ -29,6 +33,11 @@ class MainFragment : BaseFragment(), MainFragmentView {
          * Tag for transactions.
          */
         val TAG = MainFragment.toString();
+
+        /**
+         * Request code for location permission.
+         */
+        val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
     @Inject
@@ -66,6 +75,22 @@ class MainFragment : BaseFragment(), MainFragmentView {
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDestroyView()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                //TODO: Handle permission result.
+                if (permissions.size == 1 && grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(activity, "Pozwolenie na korzystanie z lokalizacji", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(activity, "Brak pozwolenia na lokalizację", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else -> {
+                throw IllegalArgumentException("Unknown request code $requestCode")
+            }
+        }
     }
 
     override fun onNearestInPostResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
@@ -139,7 +164,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         searchView.setCurrentLocationListener(object : LocationSearchView.LocationSearchView.CurrentLocationListener {
             override fun onCurrentLocationClick() {
-                throw UnsupportedOperationException()
+                //TODO: As a function passed proper implemented fun to search current loc.
+                givenPermission(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+                        , LOCATION_PERMISSION_REQUEST_CODE
+                        , { Toast.makeText(activity, "Są uprawnienia", Toast.LENGTH_SHORT).show() })
             }
         })
     }

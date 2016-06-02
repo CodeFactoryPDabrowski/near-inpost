@@ -20,6 +20,14 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // Workaround to propagate permission result to fragments.
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
     /**
      * Initialize views,
      */
