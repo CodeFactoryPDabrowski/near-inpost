@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerFragmentComponent
@@ -28,6 +29,11 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
      * Container for search query.
      */
     lateinit var search: EditText
+
+    /**
+     * Current location image view button.
+     */
+    lateinit var currentLocation: View
 
     /**
      * List of search query results.
@@ -77,6 +83,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         search = findViewById(R.id.customLocationSearch) as EditText
         searchResult = findViewById(R.id.customLocationSearchResult) as RecyclerView
         searchDivider = findViewById(R.id.customLocationDivider)
+        currentLocation = findViewById(R.id.customLocationCurrent)
 
         adapter = LocationSearchAdapter(object : LocationSearchHolder.LocationSearchHolderListener {
             override fun onResultClick(postalCodeUi: PostalCodeUi) {
@@ -103,6 +110,9 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
                 //Empty
             }
         })
+
+        //TODO: Search for current location.
+        currentLocation.setOnClickListener { view -> Toast.makeText(context, "Not implemented yet", Toast.LENGTH_SHORT).show() }
     }
 
     override fun onDetachedFromWindow() {
@@ -146,7 +156,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        var resultWitPostalOnly = getAddressesWithPostalOnly(it)
+                        val resultWitPostalOnly = getAddressesWithPostalOnly(it)
                         adapter.addSearchResult(resultWitPostalOnly)
                         setSearchLayoutHeight(resultWitPostalOnly.size)
                         searchDivider.visibility = if (resultWitPostalOnly.size > 0) VISIBLE else GONE
@@ -171,7 +181,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
      * @param itemCount Number of items.
      */
     private fun setSearchLayoutHeight(itemCount: Int = 0) {
-        var recyclerLayoutParams = searchResult.layoutParams
+        val recyclerLayoutParams = searchResult.layoutParams
         recyclerLayoutParams.height = (itemCount * resources.getDimension(R.dimen.main_search_view_height)).toInt()
         searchResult.layoutParams = recyclerLayoutParams
     }

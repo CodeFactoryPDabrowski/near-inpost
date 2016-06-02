@@ -13,9 +13,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/customLocationSearch"
-            style="@style/MainSearchViewStyle" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--Location input edit text-->
+            <EditText
+                android:id="@+id/customLocationSearch"
+                style="@style/MainSearchViewStyle"
+                android:layout_toStartOf="@+id/customLocationCurrent" />
+            <!--Image button for searching current location-->
+            <ImageView
+                android:id="@+id/customLocationCurrent"
+                android:layout_width="@dimen/main_search_view_current_width_height"
+                android:layout_height="@dimen/main_search_view_current_width_height"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/common_default_margin"
+                android:contentDescription="@string/app_name"
+                app:srcCompat="@drawable/custom_location_search_view_current_icon" />
+        </RelativeLayout>
 
         <!--Divider between search view and results-->
         <View
