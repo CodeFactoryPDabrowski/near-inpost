@@ -10,4 +10,14 @@ interface Presenter<V> {
      * Bind view to presenter.
      */
     fun bind(view: V)
+
+    /**
+     * Subscribe rxJava subscription.
+     */
+    fun subscribeRx()
+
+    /**
+     * Unsubscribe rx java subscriptions.
+     */
+    fun unsubscribeRx()
 }

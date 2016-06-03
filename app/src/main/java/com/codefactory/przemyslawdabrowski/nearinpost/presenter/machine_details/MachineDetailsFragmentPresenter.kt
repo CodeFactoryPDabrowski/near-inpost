@@ -15,9 +15,10 @@ class MachineDetailsFragmentPresenter @Inject constructor() : BasePresenter<Mach
      * @param arguments Bundle that should contain inPost machine details.
      */
     fun setDetails(arguments: Bundle) {
-        var machineDetails: MachineUi? = arguments.getParcelable<MachineUi>(MachineDetailsFragment.MACHINE_DETAILS_KEY) ?:
+        val machineDetails: MachineUi? = arguments.getParcelable<MachineUi>(MachineDetailsFragment.MACHINE_DETAILS_KEY) ?:
                 throw IllegalArgumentException("Machine details cannot be null")
-        var postalCode = arguments.getString(MachineDetailsFragment.POSTAL_CODE_KEY) ?:
+        //TODO: Check .getString method for api 17
+        val postalCode = arguments.getString(MachineDetailsFragment.POSTAL_CODE_KEY) ?:
                 throw IllegalArgumentException("Postal code cannot be null")
 
         view.showDetails(postalCode, machineDetails!!)

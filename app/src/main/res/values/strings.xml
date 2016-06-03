@@ -11,4 +11,5 @@
     <string name="main_fragment_empty_text">No results, try something else :(</string>
     <string name="main_fragment_fresh_text">Nothing was searching</string>
     <string name="main_fragment_postal_code_text">Results for postal code</string>
+    <string name="main_fragment_permission_denied_text">Location permission denied</string>
 </resources>

@@ -80,11 +80,12 @@ class MainFragment : BaseFragment(), MainFragmentView {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
-                //TODO: Handle permission result.
                 if (permissions.size == 1 && grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(activity, "Pozwolenie na korzystanie z lokalizacji", Toast.LENGTH_SHORT).show()
+                    presenter.findCurrentLocation()
                 } else {
-                    Toast.makeText(activity, "Brak pozwolenia na lokalizację", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity
+                            , activity.getString(R.string.main_fragment_permission_denied_text)
+                            , Toast.LENGTH_SHORT).show()
                 }
             }
             else -> {
@@ -164,10 +165,9 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         searchView.setCurrentLocationListener(object : LocationSearchView.LocationSearchView.CurrentLocationListener {
             override fun onCurrentLocationClick() {
-                //TODO: As a function passed proper implemented fun to search current loc.
                 givenPermission(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
                         , LOCATION_PERMISSION_REQUEST_CODE
-                        , { Toast.makeText(activity, "Są uprawnienia", Toast.LENGTH_SHORT).show() })
+                        , { presenter.findCurrentLocation() })
             }
         })
     }
