@@ -1,5 +1,7 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.presenter.main
 
+import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
+import com.codefactory.przemyslawdabrowski.nearinpost.api.GoogleGeocodeService
 import com.codefactory.przemyslawdabrowski.nearinpost.api.NearestMachinesService
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentScope
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
@@ -25,6 +27,11 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
     lateinit var nearestMachineService: NearestMachinesService
 
     /**
+     * Service for getting geocoding data from google apis.
+     */
+    lateinit var googleGeocodeService: GoogleGeocodeService
+
+    /**
      * TODO: create common object for list of machines and postal code UI
      * List of cached last near in post machines response.
      */
@@ -37,6 +44,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
 
     init {
         nearestMachineService = retrofit.create(NearestMachinesService::class.java)
+        googleGeocodeService = retrofit.create(GoogleGeocodeService::class.java)
     }
 
     /**
@@ -102,13 +110,18 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
      */
     fun findCurrentLocation() {
         val subscription = reactiveLocationProvider.lastKnownLocation.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap { it ->
+                    googleGeocodeService.reverseGeocodeCoordinates("${it.latitude},${it.longitude}"
+                            , BuildConfig.GOOGLE_GEOCODING_API_KEY)
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    //TODO: Check for postal code -> request for maps api.
-                    val location = it
+                    //TODO: Check for postal code -> request for maps api. Handle response.
+                    val address = it
+                    val sss = ""
                 }, {
                     err ->
-
                 })
         subscriptions!!.add(subscription)
     }

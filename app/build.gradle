@@ -2,6 +2,23 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.neenbedankt.android-apt'
 
+/**
+ * Function to retrieve a secret from environment variable or gradle property
+ * @param envVarName name of the environment variable to be used in the first place
+ * @param propertyName name of the gradle.properties entry
+ * @return value of the env. var, property or "undefined"
+ */
+def secret(String envVarName, String propertyName) {
+    try {
+        return '"' + (System.getenv(envVarName) ?: property(propertyName)) + '"'
+    } catch (MissingPropertyException ignored) {
+        return "\"$propertyName undefined\""
+    }
+}
+
+
+def googleGeocodingApiKeyProp = secret("GOOGLE_GEOCODING_API_KEY", "GoogleGeocodingApiKey")
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -20,6 +37,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each { buildType ->
+        buildType.buildConfigField 'String', 'GOOGLE_GEOCODING_API_KEY', googleGeocodingApiKeyProp
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -63,6 +85,7 @@ dependencies {
     compile appDependencies.reactiveLocation
     compile appDependencies.serviceLocation
     compile appDependencies.maps
+    compile appDependencies.gson
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

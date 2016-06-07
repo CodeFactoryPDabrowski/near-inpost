@@ -20,14 +20,15 @@ ext {
     reactiveLocationVersion = '0.8@aar'
     serviceLocationVersion = '8.4.0'
     mapsVersion = '8.4.0'
+    gsonVersion = '2.0.0'
 
     dependencies = [
-            jUnitTest         : "junit:junit:$jUnitTestVersion",
-            appCompat         : "com.android.support:appcompat-v7:$appCompatVersion",
-            kotlin            : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-            kotterKnife       : "com.jakewharton:kotterknife:$kotterKnifeVersion",
-            daggerCompiler    : "com.google.dagger:dagger-compiler:$daggerCompilerVersion",
-            dagger            : "com.google.dagger:dagger:$daggerVersion",
+            jUnitTest       : "junit:junit:$jUnitTestVersion",
+            appCompat       : "com.android.support:appcompat-v7:$appCompatVersion",
+            kotlin          : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotterKnife     : "com.jakewharton:kotterknife:$kotterKnifeVersion",
+            daggerCompiler  : "com.google.dagger:dagger-compiler:$daggerCompilerVersion",
+            dagger          : "com.google.dagger:dagger:$daggerVersion",
             javaxAnnotation   : "org.glassfish:javax.annotation:$javaxAnnotationVersion",
             kotlinGenerator   : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
             retrofit2         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
@@ -38,11 +39,12 @@ ext {
             rxKotlin          : "io.reactivex:rxkotlin:$rxKotlinVersion",
             stetho            : "com.facebook.stetho:stetho:$stethoVersion",
             stethoOkHttp      : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
-            design            : "com.android.support:design:$designVersion",
-            cardView          : "com.android.support:cardview-v7:$cardViewVersion",
-            recyclerView      : "com.android.support:recyclerview-v7:$recyclerViewVersion",
-            reactiveLocation  : "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
-            serviceLocation   : "com.google.android.gms:play-services-location:$serviceLocationVersion",
-            maps              : "com.google.android.gms:play-services-maps:$mapsVersion",
+            design          : "com.android.support:design:$designVersion",
+            cardView        : "com.android.support:cardview-v7:$cardViewVersion",
+            recyclerView    : "com.android.support:recyclerview-v7:$recyclerViewVersion",
+            reactiveLocation: "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
+            serviceLocation : "com.google.android.gms:play-services-location:$serviceLocationVersion",
+            maps            : "com.google.android.gms:play-services-maps:$mapsVersion",
+            gson            : "com.squareup.retrofit2:converter-gson:$gsonVersion"
     ]
 }
