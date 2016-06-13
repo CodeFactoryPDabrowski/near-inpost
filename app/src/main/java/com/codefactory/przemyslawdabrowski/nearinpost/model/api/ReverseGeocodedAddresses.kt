@@ -30,7 +30,7 @@ class Result() {
      */
     @SerializedName("address_components")
     @Expose
-    var adressComponents: List<AddressComponent> = emptyList()
+    var addressComponents: List<AddressComponent> = emptyList()
 
     /**
      * Formatted address, e.g Rutki 13, 18-430 Wizna, Polska.
@@ -63,3 +63,14 @@ class AddressComponent() {
     @Expose
     var types: List<String> = emptyList()
 }
+
+//TODO: Add rest of possible responses from google developer geocoding API.
+enum class AddressComponentType(val componentType: String) {
+    POSTAL_CODE("postal_code")
+}
+
+//TODO: Add rest of possible responses from google developer geocoding API.
+enum class ReverseGeocodedAddressStatusType(val responseType: String) {
+    OK("OK")
+}
+

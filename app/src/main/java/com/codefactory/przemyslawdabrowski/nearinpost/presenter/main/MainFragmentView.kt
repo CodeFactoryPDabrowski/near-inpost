@@ -20,4 +20,14 @@ interface MainFragmentView {
      * Get context of activity, needs for starting new activity.
      */
     fun getActivityContext(): BaseActivity
+
+    /**
+     * Error during finding current user location.
+     */
+    fun onFindCurrentLocationError(err: Throwable?)
+
+    /**
+     * Completed finding current location.
+     */
+    fun onFindCurrentLocationCompleted()
 }

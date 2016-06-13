@@ -4,12 +4,13 @@ import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
 import com.codefactory.przemyslawdabrowski.nearinpost.api.GoogleGeocodeService
 import com.codefactory.przemyslawdabrowski.nearinpost.api.NearestMachinesService
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentScope
+import com.codefactory.przemyslawdabrowski.nearinpost.model.api.AddressComponentType
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
+import com.codefactory.przemyslawdabrowski.nearinpost.model.api.ReverseGeocodedAddressStatusType
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.navigation.Navigator
 import com.codefactory.przemyslawdabrowski.nearinpost.presenter.BasePresenter
-import d
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider
 import retrofit2.Retrofit
 import rx.android.schedulers.AndroidSchedulers
@@ -73,7 +74,6 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                     }
                 }, {
                     error ->
-                    d { "some error ${error.message}" }
                     view.onNearestInPostError(error)
                 })
         subscriptions!!.add(subscription)
@@ -107,21 +107,50 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
 
     /**
      * Find nearest in post machines for current location.
+     * @param limit Limit of nearest in post machine results.
      */
-    fun findCurrentLocation() {
+    fun findCurrentLocation(limit: Int = 5) {
         val subscription = reactiveLocationProvider.lastKnownLocation.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap { it ->
                     googleGeocodeService.reverseGeocodeCoordinates("${it.latitude},${it.longitude}"
                             , BuildConfig.GOOGLE_GEOCODING_API_KEY)
                 }
+                .filter {
+                    it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.size > 0
+                }
+                .map { it ->
+                    for (result in it.results) {
+                        for (addressComponent in result.addressComponents) {
+                            if (addressComponent.types.size == 1
+                                    && addressComponent.types[0].equals(AddressComponentType.POSTAL_CODE.componentType)) {
+                                return@map addressComponent.longName
+                            }
+                        }
+                    }
+                    return@map null
+                }
+                .filter { it != null }
+                .flatMap {
+                    val postalCode = it!!
+                    nearestMachineService.findNearestMachines(postalCode, limit)
+                            .map { Pair(PostalCodeUi(postalCode), it) }
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    //TODO: Check for postal code -> request for maps api. Handle response.
-                    val address = it
-                    val sss = ""
+                    postalCodeUiCache = it.first
+                    if (it.second.machine != null) {
+                        nearInPostMachinesCache = it.second.machine
+                        view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, nearInPostMachinesCache  as List<Machine>)
+                    } else {
+                        nearInPostMachinesCache = emptyList()
+                        view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, emptyList())
+                    }
                 }, {
                     err ->
+                    view.onFindCurrentLocationError(err)
+                }, {
+                    view.onFindCurrentLocationCompleted()
                 })
         subscriptions!!.add(subscription)
     }

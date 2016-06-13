@@ -111,6 +111,15 @@ class MainFragment : BaseFragment(), MainFragmentView {
         throw UnsupportedOperationException()
     }
 
+    override fun onFindCurrentLocationError(err: Throwable?) {
+        //TODO: Implement this.
+        throw UnsupportedOperationException()
+    }
+
+    override fun onFindCurrentLocationCompleted() {
+        // TODO: If before was showing progress then hide it.
+    }
+
     override fun getActivityContext(): BaseActivity {
         val activityContext = activity
         if (activityContext is BaseActivity) {
