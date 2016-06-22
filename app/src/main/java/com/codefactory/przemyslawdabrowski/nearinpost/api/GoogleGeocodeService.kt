@@ -21,4 +21,15 @@ interface GoogleGeocodeService {
     @GET("https://maps.googleapis.com/maps/api/geocode/json") @JsonAndXmlConverter.Json
     fun reverseGeocodeCoordinates(@Query("latlng") latlng: String
                                   , @Query("key") key: String): Observable<ReverseGeocodedAddresses>
+
+    /**
+     * Get reverse geo coding of address query.
+     * @param address Address query for geocoding.
+     * @param key Key for google apis server.
+     *
+     * @return Observable with reverse geo coding results.
+     */
+    @GET("https://maps.googleapis.com/maps/api/geocode/json") @JsonAndXmlConverter.Json
+    fun reverseGeocodeAddress(@Query("address") address: String
+                              , @Query("key") key: String): Observable<ReverseGeocodedAddresses>
 }

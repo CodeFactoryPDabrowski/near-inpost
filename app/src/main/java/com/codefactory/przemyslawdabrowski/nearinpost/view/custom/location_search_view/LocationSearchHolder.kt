@@ -1,15 +1,15 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view
 
-import android.location.Address
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.bindView
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.SimpleLocationSearchResultUi
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseHolder
 
-class LocationSearchHolder(itemView: View?, listener: LocationSearchHolderListener) : BaseHolder<Address>(itemView) {
+class LocationSearchHolder(itemView: View?, listener: LocationSearchHolderListener) : BaseHolder<SimpleLocationSearchResultUi>(itemView) {
 
     val title: TextView by bindView(R.id.customLocationViewHolderTitle)
 
@@ -20,7 +20,7 @@ class LocationSearchHolder(itemView: View?, listener: LocationSearchHolderListen
     /**
      * Search result address associated with view holder.
      */
-    lateinit var searchResult: Address
+    lateinit var searchResult: SimpleLocationSearchResultUi
 
     /**
      * Listener to communicate with parent component.
@@ -29,57 +29,13 @@ class LocationSearchHolder(itemView: View?, listener: LocationSearchHolderListen
 
     init {
         holderListener = listener
-        resultLayout.setOnClickListener { view -> holderListener.onResultClick(PostalCodeUi(searchResult.postalCode)) }
+        resultLayout.setOnClickListener { view -> holderListener.onResultClick(searchResult.postalCodeUi) }
     }
 
-    override fun bindItem(it: Address) {
+    override fun bindItem(it: SimpleLocationSearchResultUi) {
         searchResult = it
-        title.text = it.createAddress()
-        subTitle.text = it.postalCode
-    }
-
-    /**
-     * Create address text extension, e.g Polska, Rutki, 13.
-     */
-    private fun Address.createAddress(): String {
-        //Func to create text divided with ',' sign.
-        fun createAddressText(list: List<String>): String {
-            var addressText = ""
-            for (i in 0..list.size - 1) {
-                if (i == list.size - 1) {
-                    addressText += list[i]
-                } else {
-                    addressText += list[i]
-                    addressText += ", "
-                }
-            }
-
-            return addressText
-        }
-
-        var addressPartsList = emptyList<String>()
-        if (!this.countryName.isNullOrEmpty()) {
-            addressPartsList += this.countryName
-        }
-
-        if (!this.locality.isNullOrEmpty()) {
-            addressPartsList += this.locality
-        }
-
-        if (!this.subThoroughfare.isNullOrEmpty()) {
-            addressPartsList += this.subThoroughfare
-        }
-
-        if (!this.thoroughfare.isNullOrEmpty()) {
-            addressPartsList += this.thoroughfare
-        }
-
-        if (addressPartsList.isEmpty()) {
-            return "Empty Address"//TODO: Return from resources
-        } else {
-            return createAddressText(addressPartsList)
-        }
-
+        title.text = it.formattedAddress
+        subTitle.text = it.postalCodeUi.postalCode
     }
 
     /**

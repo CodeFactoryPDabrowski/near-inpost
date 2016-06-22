@@ -86,6 +86,7 @@ dependencies {
     compile appDependencies.serviceLocation
     compile appDependencies.maps
     compile appDependencies.gson
+    compile appDependencies.rxBinding
 }
 buildscript {
     def kotlinVersion = rootProject.ext.kotlinVersion

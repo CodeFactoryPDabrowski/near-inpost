@@ -1,27 +1,30 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view
 
 import android.content.Context
-import android.location.Address
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
 import com.codefactory.przemyslawdabrowski.nearinpost.R
+import com.codefactory.przemyslawdabrowski.nearinpost.api.GoogleGeocodeService
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.component.DaggerFragmentComponent
+import com.codefactory.przemyslawdabrowski.nearinpost.model.api.AddressComponentType
+import com.codefactory.przemyslawdabrowski.nearinpost.model.api.ReverseGeocodedAddressStatusType
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
-import pl.charmas.android.reactivelocation.ReactiveLocationProvider
+import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.SimpleLocationSearchResultUi
+import com.jakewharton.rxbinding.widget.RxTextView
+import retrofit2.Retrofit
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-//TODO: Need to improve this view!!! -> Hide hints on click outside, show only addresses with postal code...
+//TODO: Need to improve this view!!! -> Height of result adapter view, should be fixed!!!
 class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) : FrameLayout(context, attrs, defStyle) {
 
     /**
@@ -50,12 +53,14 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
     val DEBOUNCE_TIME = 400L
 
     /**
-     * Max number of search results.
+     * Max results count.
      */
-    val GEOCODER_MAX_RESULTS = 3
+    val MAX_RESULTS = 3
 
     @Inject
-    lateinit var reactiveLocationProvide: ReactiveLocationProvider
+    lateinit var retrofit: Retrofit
+
+    private lateinit var geocodeService: GoogleGeocodeService
 
     /**
      * Adapter to provide search query results views to list.
@@ -83,6 +88,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
 
     init {
         DaggerFragmentComponent.builder().appComponent(App.appComponent).build().inject(this)
+        geocodeService = retrofit.create(GoogleGeocodeService::class.java)
         inflate(context, R.layout.custom_location_search_view, this)
         search = findViewById(R.id.customLocationSearch) as EditText
         searchResult = findViewById(R.id.customLocationSearchResult) as RecyclerView
@@ -99,22 +105,44 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         searchResult.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         searchResult.adapter = adapter
         setSearchLayoutHeight()
-        search.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                s?.let {
-                    textChanged(s.toString())
+
+        // In case of any error while geocoding empty list will be passed -> onErrorReturn()
+        subscription = RxTextView.textChangeEvents(search)
+                .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .filter { it != null && it.text().length >= 3 }
+                .flatMap {
+                    geocodeService.reverseGeocodeAddress(it.text().toString()
+                            , BuildConfig.GOOGLE_GEOCODING_API_KEY)
+                            .filter { it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.size > 0 }
+                            .map { it ->
+                                var searchAddresses = emptyArray<SimpleLocationSearchResultUi>()
+                                for (result in it.results) {
+                                    for (addressComponent in result.addressComponents) {
+                                        if (addressComponent.types.size == 1
+                                                && addressComponent.types[0].equals(AddressComponentType.POSTAL_CODE.componentType)) {
+                                            if (!result.formattedAddress.isNullOrEmpty() && !addressComponent.longName.isNullOrEmpty()) {
+                                                searchAddresses += SimpleLocationSearchResultUi(
+                                                        result.formattedAddress!!
+                                                        , PostalCodeUi(addressComponent.longName!!))
+                                            }
+                                        }
+                                    }
+                                }
+                                return@map searchAddresses.take(MAX_RESULTS)
+                            }
+                            .onErrorReturn { it -> emptyList<SimpleLocationSearchResultUi>() }
+                            .subscribeOn(Schedulers.io())
                 }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //Empty
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //Empty
-            }
-        })
-
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe ({
+                    adapter.addSearchResult(it)
+                    val resultListSize = it.size
+                    setSearchLayoutHeight(resultListSize)
+                    searchDivider.visibility = if (resultListSize > 0) VISIBLE else GONE
+                }, {
+                    hideHints()
+                })
         currentLocation.setOnClickListener { view -> currentLocationListener?.onCurrentLocationClick() }
     }
 
@@ -164,37 +192,6 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
         setSearchLayoutHeight()
         searchDivider.visibility = GONE
     }
-
-    /**
-     * Action on search edit text changed.
-     * @param newText Changed text.
-     */
-    private fun textChanged(newText: String) {
-        if (newText.length >= 2) {
-            subscription = reactiveLocationProvide.getGeocodeObservable(newText, GEOCODER_MAX_RESULTS)
-                    .debounce(DEBOUNCE_TIME, TimeUnit.MILLISECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        val resultWitPostalOnly = getAddressesWithPostalOnly(it)
-                        adapter.addSearchResult(resultWitPostalOnly)
-                        setSearchLayoutHeight(resultWitPostalOnly.size)
-                        searchDivider.visibility = if (resultWitPostalOnly.size > 0) VISIBLE else GONE
-                    }, {
-                        err ->
-                        hideHints()
-                    })
-        } else {
-            hideHints()
-        }
-    }
-
-    /**
-     * Get results addresses with postal code only.
-     * @param allAddressesResults List of all addresses results.
-     * @return List of addresses with postal code.
-     */
-    private fun getAddressesWithPostalOnly(allAddressesResults: List<Address>): List<Address> = allAddressesResults.filter { addr -> addr.postalCode != null }
 
     /**
      * Set height of search query results.
