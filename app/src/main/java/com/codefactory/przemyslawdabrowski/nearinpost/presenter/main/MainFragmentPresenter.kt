@@ -3,6 +3,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.presenter.main
 import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
 import com.codefactory.przemyslawdabrowski.nearinpost.api.GoogleGeocodeService
 import com.codefactory.przemyslawdabrowski.nearinpost.api.NearestMachinesService
+import com.codefactory.przemyslawdabrowski.nearinpost.controller.PreferenceController
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentScope
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.AddressComponentType
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
@@ -20,7 +21,8 @@ import javax.inject.Inject
 @FragmentScope
 class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                                                 , val navigator: Navigator
-                                                , val reactiveLocationProvider: ReactiveLocationProvider) : BasePresenter<MainFragmentView>() {
+                                                , val reactiveLocationProvider: ReactiveLocationProvider,
+                                                val preferenceController: PreferenceController) : BasePresenter<MainFragmentView>() {
 
     /**
      * Service for getting nearest InPost machines.
@@ -51,16 +53,15 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
     /**
      * Search nearest in post machines.
      * @param postalCodeUi Postal code object contains postal code of searching location.
-     * @param limit Limit of searching machines.
      */
-    fun searchForNearestInPost(postalCodeUi: PostalCodeUi, limit: Int = 5) {
+    fun searchForNearestInPost(postalCodeUi: PostalCodeUi) {
         //TODO: Check if valid post code. Do some cache after rotation mechanism.
         val postalCode = postalCodeUi.postalCode
         if (postalCode.length == 0) {
             view.onEmptyPostalCode()
             return
         }
-        val subscription = nearestMachineService.findNearestMachines(postalCode, limit)
+        val subscription = nearestMachineService.findNearestMachines(postalCode, preferenceController.maxInPostMachinesResult)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -108,9 +109,8 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
 
     /**
      * Find nearest in post machines for current location.
-     * @param limit Limit of nearest in post machine results.
      */
-    fun findCurrentLocation(limit: Int = 5) {
+    fun findCurrentLocation() {
         val subscription = reactiveLocationProvider.lastKnownLocation.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .flatMap { it ->
@@ -134,7 +134,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                 .filter { it != null }
                 .flatMap {
                     val postalCode = it!!
-                    nearestMachineService.findNearestMachines(postalCode, limit)
+                    nearestMachineService.findNearestMachines(postalCode, preferenceController.maxInPostMachinesResult)
                             .map { Pair(PostalCodeUi(postalCode), it) }
                 }
                 .observeOn(AndroidSchedulers.mainThread())

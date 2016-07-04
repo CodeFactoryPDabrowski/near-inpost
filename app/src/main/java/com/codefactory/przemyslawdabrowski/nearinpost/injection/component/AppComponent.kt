@@ -1,6 +1,7 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.injection.component
 
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
+import com.codefactory.przemyslawdabrowski.nearinpost.controller.PreferenceController
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.ApiModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.AppModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.LocationModule
@@ -33,4 +34,9 @@ interface AppComponent {
      * Provide navigator object for navigation between activities.
      */
     fun navigator(): Navigator
+
+    /**
+     * Provide mechanism to save and obtain shared preferences.
+     */
+    fun prefs(): PreferenceController
 }
