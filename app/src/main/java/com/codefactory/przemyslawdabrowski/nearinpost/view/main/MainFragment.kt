@@ -9,10 +9,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.extension.givenPermission
 import com.codefactory.przemyslawdabrowski.nearinpost.extension.hideKeyboard
+import com.codefactory.przemyslawdabrowski.nearinpost.extension.makeInvisible
+import com.codefactory.przemyslawdabrowski.nearinpost.extension.makeVisible
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
@@ -47,6 +50,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     private lateinit var searchButton: FloatingActionButton
     private lateinit var searchResultList: RecyclerView
     private lateinit var consumerView: View
+    private lateinit var searchProgress: ProgressBar
 
     /**
      * Postal code fir searched in post machines.
@@ -72,6 +76,11 @@ class MainFragment : BaseFragment(), MainFragmentView {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        searchProgress.makeInvisible()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onDestroyView()
@@ -95,6 +104,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onNearestInPostResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
+        searchProgress.makeInvisible()
         var items = emptyList<MachineItem>()
         if (machines.size > 0) {
             postalCode = postalCodeUi
@@ -116,8 +126,12 @@ class MainFragment : BaseFragment(), MainFragmentView {
         throw UnsupportedOperationException()
     }
 
+    override fun onEmptyPostalCode() {
+        searchProgress.makeInvisible()
+    }
+
     override fun onFindCurrentLocationCompleted() {
-        // TODO: If before was showing progress then hide it.
+        searchProgress.makeInvisible()
     }
 
     override fun getActivityContext(): BaseActivity {
@@ -142,6 +156,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
             searchView = view.findViewById(R.id.mainLocationToSearch) as LocationSearchView
             searchResultList = view.findViewById(R.id.mainInPostSearchResultList) as RecyclerView
             consumerView = view.findViewById(R.id.mainEventConsumerView)
+            searchProgress = view.findViewById(R.id.mainSearchProgress) as ProgressBar
         }
         findViews()
         searchResultList.layoutManager = LinearLayoutManager(activity)
@@ -160,6 +175,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
         searchButton.setOnClickListener { view ->
             searchView.hideHints()
             hideKeyboard(searchView.search.windowToken)
+            searchProgress.makeVisible()
             presenter.searchForNearestInPost(searchView.getPostalCode())
         }
         consumerView.setOnTouchListener { view, motionEvent ->
@@ -168,6 +184,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
         }
         searchView.setResultListener(object : LocationSearchView.LocationSearchView.LocationResultListener {
             override fun onResultClick(postalCodeUi: PostalCodeUi) {
+                searchProgress.makeVisible()
                 presenter.searchForNearestInPost(postalCodeUi)
             }
         })
@@ -176,7 +193,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
             override fun onCurrentLocationClick() {
                 givenPermission(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
                         , LOCATION_PERMISSION_REQUEST_CODE
-                        , { presenter.findCurrentLocation() })
+                        , {
+                    searchProgress.makeVisible()
+                    presenter.findCurrentLocation()
+                })
             }
         })
     }

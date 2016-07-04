@@ -1,5 +1,6 @@
 package com.codefactory.przemyslawdabrowski.nearinpost.view.main.adapter
 
+import android.content.Context
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -17,16 +18,22 @@ class MainFragmentHolder(itemView: View?, listener: MainFragmentHolderListener) 
     val holderLayout: RelativeLayout by bindView(R.id.mainFragmentHolderLayout)
 
     /**
+     * Context needs for resources.
+     */
+    private lateinit var context: Context
+
+    /**
      * Listener to communicate with parent component.
      */
-    lateinit var holderListener: MainFragmentHolderListener
+    private lateinit var holderListener: MainFragmentHolderListener
 
     /**
      * InPost ui object.
      */
-    var machineUI: MachineUi? = null
+    private var machineUI: MachineUi? = null
 
     init {
+        context = itemView!!.context
         holderListener = listener
         holderLayout.setOnClickListener { view -> if (machineUI != null) holderListener.onMachineClicked(machineUI as MachineUi) }
     }
@@ -36,7 +43,8 @@ class MainFragmentHolder(itemView: View?, listener: MainFragmentHolderListener) 
             machineUI = it.itemData
             machineName.text = (machineUI as MachineUi).name
             machineStreet.text = (machineUI as MachineUi).street
-            machineDistance.text = (machineUI as MachineUi).distance.toString()
+            machineDistance.text = (machineUI as MachineUi).distance.toString() + " " +
+                    context.getString(R.string.main_fragment_holder_distance_unit)
         }
     }
 

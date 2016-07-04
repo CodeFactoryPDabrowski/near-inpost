@@ -12,4 +12,5 @@
     <string name="main_fragment_fresh_text">Jeszcze nic nie szukałeś</string>
     <string name="main_fragment_postal_code_text">Wyniki dla kodu pocztowego</string>
     <string name="main_fragment_permission_denied_text">Brak pozwolenia na wykorzystanie lokalizacji</string>
+    <string name="main_fragment_holder_distance_unit">km</string>
 </resources>

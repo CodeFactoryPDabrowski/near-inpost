@@ -57,6 +57,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
         //TODO: Check if valid post code. Do some cache after rotation mechanism.
         val postalCode = postalCodeUi.postalCode
         if (postalCode.length == 0) {
+            view.onEmptyPostalCode()
             return
         }
         val subscription = nearestMachineService.findNearestMachines(postalCode, limit)

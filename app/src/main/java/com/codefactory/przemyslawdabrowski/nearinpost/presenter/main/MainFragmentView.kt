@@ -30,4 +30,9 @@ interface MainFragmentView {
      * Completed finding current location.
      */
     fun onFindCurrentLocationCompleted()
+
+    /**
+     * Find location with empty postal code passed.
+     */
+    fun onEmptyPostalCode()
 }
