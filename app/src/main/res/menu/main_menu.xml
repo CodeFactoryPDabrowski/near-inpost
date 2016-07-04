@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--Action max in post machines result-->
+    <item
+        android:id="@+id/mainMenuMaxResults"
+        android:title="@string/main_menu_in_post_max_results"
+        app:showAsAction="never" />
+</menu>

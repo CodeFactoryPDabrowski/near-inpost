@@ -13,4 +13,5 @@
     <string name="main_fragment_postal_code_text">Results for postal code</string>
     <string name="main_fragment_permission_denied_text">Location permission denied</string>
     <string name="main_fragment_holder_distance_unit">km</string>
+    <string name="main_menu_in_post_max_results">inPost</string>
 </resources>
