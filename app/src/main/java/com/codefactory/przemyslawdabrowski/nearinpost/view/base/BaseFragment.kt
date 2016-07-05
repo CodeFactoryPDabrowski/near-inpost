@@ -27,7 +27,7 @@ abstract class BaseFragment : Fragment() {
      * Init component inside fragment that extends BaseFragment.
      */
     fun initComponent(): FragmentComponent
-            = DaggerFragmentComponent.builder().appComponent(App.appComponent).build();
+            = DaggerFragmentComponent.builder().appComponent(App.appComponent).build()
 }
 
 

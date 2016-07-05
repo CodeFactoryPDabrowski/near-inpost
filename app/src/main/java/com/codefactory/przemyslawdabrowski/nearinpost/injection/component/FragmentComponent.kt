@@ -4,6 +4,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentSc
 import com.codefactory.przemyslawdabrowski.nearinpost.view.custom.location_search_view.LocationSearchView
 import com.codefactory.przemyslawdabrowski.nearinpost.view.machine_details.MachineDetailsFragment
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.MainFragment
+import com.codefactory.przemyslawdabrowski.nearinpost.view.main.results_number.MainMaxResultsDialog
 import dagger.Component
 
 @FragmentScope
@@ -24,4 +25,9 @@ interface FragmentComponent {
      * Inject dependencies into machine details fragment.
      */
     fun inject(machineDetailsFragment: MachineDetailsFragment)
+
+    /**
+     * Inject dependencies into max results dialog.
+     */
+    fun inject(maxResultsDialog: MainMaxResultsDialog)
 }

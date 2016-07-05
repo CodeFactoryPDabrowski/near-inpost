@@ -33,6 +33,6 @@ class PreferenceController @Inject constructor(val app: App) {
             return preferences.getInt(SHARED_PREFERENCES_MAX_RESULTS_KEY, 3)
         }
         set(value) {
-            preferences.edit().putInt(SHARED_PREFERENCES_MAX_RESULTS_KEY, value)
+            preferences.edit().putInt(SHARED_PREFERENCES_MAX_RESULTS_KEY, value).apply()
         }
 }
