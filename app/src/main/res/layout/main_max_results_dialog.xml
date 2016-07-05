@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><!--Radio buttons-->
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/mainMaxResultOption1"
+        style="@style/MainMaxResultsDialogRadioButtonStyle"
+        android:text="@string/main_max_results_3" />
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/mainMaxResultOption2"
+        style="@style/MainMaxResultsDialogRadioButtonStyle"
+        android:text="@string/main_max_results_5" />
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/mainMaxResultOption3"
+        style="@style/MainMaxResultsDialogRadioButtonStyle"
+        android:text="@string/main_max_results_10" />
+</RadioGroup>

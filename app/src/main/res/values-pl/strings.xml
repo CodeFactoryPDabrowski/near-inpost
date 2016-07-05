@@ -14,4 +14,8 @@
     <string name="main_fragment_permission_denied_text">Brak pozwolenia na wykorzystanie lokalizacji</string>
     <string name="main_fragment_holder_distance_unit">km</string>
     <string name="main_menu_in_post_max_results">Paczkomaty</string>
+    <string name="main_max_results_3">3 rezultaty</string>
+    <string name="main_max_results_5">5 rezultatów</string>
+    <string name="main_max_results_10">10 rezultatów</string>
+    <string name="main_max_results_dialog_title">Maksymalna ilość wyszukiwanych paczkomatów</string>
 </resources>

@@ -17,6 +17,6 @@ abstract class BaseActivity : AppCompatActivity() {
      * @return Transaction to commit.
      * */
     fun BaseActivity.replaceFragment(containerId: Int, newFragment: BaseFragment, tag: String): FragmentTransaction {
-        return supportFragmentManager.beginTransaction().replace(containerId, newFragment, tag);
+        return supportFragmentManager.beginTransaction().replace(containerId, newFragment, tag)
     }
 }

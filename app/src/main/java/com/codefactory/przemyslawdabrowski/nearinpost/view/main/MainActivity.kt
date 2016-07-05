@@ -8,6 +8,7 @@ import android.view.WindowManager
 import butterknife.bindView
 import com.codefactory.przemyslawdabrowski.nearinpost.R
 import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseActivity
+import com.codefactory.przemyslawdabrowski.nearinpost.view.main.results_number.MainMaxResultsDialog
 
 class MainActivity : BaseActivity() {
 
@@ -38,8 +39,9 @@ class MainActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.mainMenuMaxResults -> {
-                //TODO: Show dialog with max results count.
-                return super.onOptionsItemSelected(item)
+                MainMaxResultsDialog().show(supportFragmentManager, MainMaxResultsDialog.TAG)
+
+                return true
             }
             else -> return super.onOptionsItemSelected(item)
         }

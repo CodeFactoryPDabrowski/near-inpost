@@ -32,4 +32,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/main_fragment_holder_selector</item>
     </style>
+
+    <!--Main result dialog radio button style-->
+    <style name="MainMaxResultsDialogRadioButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/common_default_margin</item>
+        <item name="android:layout_marginTop">@dimen/common_default_margin</item>
+        <item name="android:textSize">@dimen/common_standard_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>
