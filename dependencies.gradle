@@ -3,7 +3,7 @@ ext {
 
     jUnitTestVersion = '4.12'
     appCompatVersion = '23.4.0'
-    kotlinVersion = '1.0.1-2'
+    kotlinVersion = '1.0.3'
     kotterKnifeVersion = '0.1.0-SNAPSHOT'
     daggerCompilerVersion = '2.0.2'
     daggerVersion = '2.0.2'
@@ -41,12 +41,13 @@ ext {
             stetho            : "com.facebook.stetho:stetho:$stethoVersion",
             stethoOkHttp      : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
             design            : "com.android.support:design:$designVersion",
-            cardView          : "com.android.support:cardview-v7:$cardViewVersion",
-            recyclerView      : "com.android.support:recyclerview-v7:$recyclerViewVersion",
-            reactiveLocation  : "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
-            serviceLocation   : "com.google.android.gms:play-services-location:$serviceLocationVersion",
-            maps              : "com.google.android.gms:play-services-maps:$mapsVersion",
-            gson              : "com.squareup.retrofit2:converter-gson:$gsonVersion",
-            rxBinding         : "com.jakewharton.rxbinding:rxbinding-kotlin:$rxBindingVersion"
+            cardView        : "com.android.support:cardview-v7:$cardViewVersion",
+            recyclerView    : "com.android.support:recyclerview-v7:$recyclerViewVersion",
+            reactiveLocation: "pl.charmas.android:android-reactive-location:$reactiveLocationVersion",
+            serviceLocation : "com.google.android.gms:play-services-location:$serviceLocationVersion",
+            maps            : "com.google.android.gms:play-services-maps:$mapsVersion",
+            gson            : "com.squareup.retrofit2:converter-gson:$gsonVersion",
+            rxBinding       : "com.jakewharton.rxbinding:rxbinding-kotlin:$rxBindingVersion",
+            kotlinReflect   : "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"// Realm has problem with annotation in kotlin <- need this
     ]
 }
