@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.injection.component
 
 import com.codefactory.przemyslawdabrowski.nearinpost.app.App
 import com.codefactory.przemyslawdabrowski.nearinpost.controller.PreferenceController
+import com.codefactory.przemyslawdabrowski.nearinpost.data.MachineRepository
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.ApiModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.AppModule
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.module.DatabaseModule
@@ -46,4 +47,9 @@ interface AppComponent {
      * Provide Realm Database.
      */
     fun realmDB(): Realm
+
+    /**
+     * Provide machine repository.
+     */
+    fun machineRepository(): MachineRepository
 }

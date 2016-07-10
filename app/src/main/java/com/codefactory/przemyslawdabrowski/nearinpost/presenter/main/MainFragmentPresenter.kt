@@ -4,10 +4,12 @@ import com.codefactory.przemyslawdabrowski.nearinpost.BuildConfig
 import com.codefactory.przemyslawdabrowski.nearinpost.api.GoogleGeocodeService
 import com.codefactory.przemyslawdabrowski.nearinpost.api.NearestMachinesService
 import com.codefactory.przemyslawdabrowski.nearinpost.controller.PreferenceController
+import com.codefactory.przemyslawdabrowski.nearinpost.data.MachineRepository
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.FragmentScope
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.AddressComponentType
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.Machine
 import com.codefactory.przemyslawdabrowski.nearinpost.model.api.ReverseGeocodedAddressStatusType
+import com.codefactory.przemyslawdabrowski.nearinpost.model.data.MachineDb
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.MachineUi
 import com.codefactory.przemyslawdabrowski.nearinpost.model.ui.PostalCodeUi
 import com.codefactory.przemyslawdabrowski.nearinpost.navigation.Navigator
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                                                 , val navigator: Navigator
                                                 , val reactiveLocationProvider: ReactiveLocationProvider,
-                                                val preferenceController: PreferenceController) : BasePresenter<MainFragmentView>() {
+                                                val preferenceController: PreferenceController,
+                                                val machineRepository: MachineRepository) : BasePresenter<MainFragmentView>() {
 
     /**
      * Service for getting nearest InPost machines.
@@ -69,7 +72,8 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                     postalCodeUiCache = postalCodeUi
                     if (paczkomaty.machine != null) {
                         nearInPostMachinesCache = paczkomaty.machine
-                        view.onNearestInPostResult(postalCodeUi, paczkomaty.machine  as List<Machine>)
+                        saveLastMachineResult(postalCodeUiCache!!, nearInPostMachinesCache!!)
+                        view.onNearestInPostResult(postalCodeUi, paczkomaty.machine!!)
                     } else {
                         nearInPostMachinesCache = emptyList()
                         view.onNearestInPostResult(postalCodeUi, emptyList())
@@ -88,6 +92,22 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
         subscribeRx()
         if (nearInPostMachinesCache != null && postalCodeUiCache != null) {
             view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, nearInPostMachinesCache as List<Machine>)
+        } else {
+            val subscription = machineRepository.getMachines().
+                    observeOn(AndroidSchedulers.mainThread()).
+                    subscribe({
+                        val lastSearched = it.map {
+                            fromDb(it)
+                        }
+                        if (lastSearched.size == 0) {
+                            view.onFreshStart()
+                        } else {
+                            view.onNearestInPostResult(PostalCodeUi(it[0].searchPostalCode), lastSearched)
+                        }
+                    }, {
+                        view.onFreshStart()
+                    })
+            subscriptions!!.add(subscription)
         }
     }
 
@@ -142,10 +162,11 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                     postalCodeUiCache = it.first
                     if (it.second.machine != null) {
                         nearInPostMachinesCache = it.second.machine
-                        view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, nearInPostMachinesCache  as List<Machine>)
+                        saveLastMachineResult(postalCodeUiCache!!, nearInPostMachinesCache!!)
+                        view.onNearestInPostResult(postalCodeUiCache!!, nearInPostMachinesCache!!)
                     } else {
                         nearInPostMachinesCache = emptyList()
-                        view.onNearestInPostResult(postalCodeUiCache as PostalCodeUi, emptyList())
+                        view.onNearestInPostResult(postalCodeUiCache!!, emptyList())
                     }
                 }, {
                     err ->
@@ -154,5 +175,30 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                     view.onFindCurrentLocationCompleted()
                 })
         subscriptions!!.add(subscription)
+    }
+
+    /**
+     * Use in functions that searching for nearest inPost machines.
+     */
+    private fun saveLastMachineResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
+        machineRepository.saveMachines(postalCodeUi, machines)
+    }
+
+    /**
+     * todo: should be in other place.
+     */
+    private fun fromDb(machineDb: MachineDb): Machine {
+        val machine = Machine()
+        machine.name = machineDb.name
+        machine.postcode = machineDb.postcode
+        machine.street = machineDb.street
+        machine.buildingnumber = machineDb.buildingNumber
+        machine.town = machineDb.town
+        machine.latitude = machineDb.latitude
+        machine.longitude = machineDb.longitude
+        machine.distance = machineDb.distance
+        machine.locationdescription = machineDb.locationDescription
+
+        return machine
     }
 }

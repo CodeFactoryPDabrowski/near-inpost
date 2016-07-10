@@ -35,7 +35,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
         /**
          * Tag for transactions.
          */
-        val TAG = MainFragment.toString();
+        val TAG = MainFragment.toString()
 
         /**
          * Request code for location permission.
@@ -69,7 +69,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.main_fragment, container, false);
+        val view = inflater?.inflate(R.layout.main_fragment, container, false)
         initViews(view)
         presenter.onCreateView()
 
@@ -101,6 +101,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
                 throw IllegalArgumentException("Unknown request code $requestCode")
             }
         }
+    }
+
+    override fun onFreshStart() {
+        adapter.addInPostItemList(listOf(MachineItem(itemType = MachineItemType.FRESH_START)))
     }
 
     override fun onNearestInPostResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
@@ -170,7 +174,6 @@ class MainFragment : BaseFragment(), MainFragmentView {
             }
 
         })
-        adapter.addInPostItemList(listOf(MachineItem(itemType = MachineItemType.FRESH_START)))
         searchResultList.adapter = adapter
         searchButton.setOnClickListener { view ->
             searchView.hideHints()

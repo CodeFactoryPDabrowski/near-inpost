@@ -35,4 +35,9 @@ interface MainFragmentView {
      * Find location with empty postal code passed.
      */
     fun onEmptyPostalCode()
+
+    /**
+     * Action on fresh start of application, db empty, etc.
+     */
+    fun onFreshStart()
 }

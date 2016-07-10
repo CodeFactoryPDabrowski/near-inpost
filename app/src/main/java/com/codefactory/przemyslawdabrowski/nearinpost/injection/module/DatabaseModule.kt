@@ -15,6 +15,7 @@ class DatabaseModule(val dbName: String, val schemaVersion: Long) {
     fun provideRealmConfiguration(app: App): RealmConfiguration = RealmConfiguration.
             Builder(app).name(dbName).schemaVersion(schemaVersion).build()
 
+    //TODO: Check if realm fragment scope instance isn't better??? realm.close in onDestroy?
     @AppScope
     @Provides
     fun provideDB(configuration: RealmConfiguration): Realm = Realm.getInstance(configuration)
