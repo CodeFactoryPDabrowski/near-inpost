@@ -18,4 +18,6 @@
     <string name="main_max_results_5">5 rezultatów</string>
     <string name="main_max_results_10">10 rezultatów</string>
     <string name="main_max_results_dialog_title">Maksymalna ilość wyszukiwanych paczkomatów</string>
+    <string name="main_error_message">Something goes wrong, try again:(</string>
+    <string name="main_searched_by_last_known_location">Wyniki dla ostatnio znanej lokalizacji</string>
 </resources>

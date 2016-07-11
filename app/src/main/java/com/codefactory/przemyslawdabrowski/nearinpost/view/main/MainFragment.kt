@@ -121,13 +121,11 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onNearestInPostError(error: Throwable?) {
-        //TODO: Implement this.
-        throw UnsupportedOperationException()
+        Toast.makeText(activity, R.string.main_error_message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onFindCurrentLocationError(err: Throwable?) {
-        //TODO: Implement this.
-        throw UnsupportedOperationException()
+        Toast.makeText(activity, R.string.main_error_message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onEmptyPostalCode() {
@@ -135,6 +133,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onFindCurrentLocationCompleted() {
+        Toast.makeText(activity, R.string.main_searched_by_last_known_location, Toast.LENGTH_SHORT).show()
         searchProgress.makeInvisible()
     }
 
