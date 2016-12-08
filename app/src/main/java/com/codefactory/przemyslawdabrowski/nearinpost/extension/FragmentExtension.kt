@@ -17,7 +17,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.view.base.BaseFragment
 fun BaseFragment.hideKeyboard(windowToken: IBinder) {
     if (activity != null) {
         val inputMethodManager = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0);
+        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }
 
@@ -32,7 +32,7 @@ inline fun BaseFragment.givenPermission(permissions: Array<String>, requestCode:
         return
     }
     if (activity !is BaseActivity) {
-        throw IllegalArgumentException("Application should use only BaseActivity class, error class: ${activity.toString()}")
+        throw IllegalArgumentException("Application should use only BaseActivity class, error class: $activity")
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         if (arePermissionsGranted(activity as BaseActivity, permissions)) {
@@ -63,12 +63,7 @@ fun askForPermissions(activity: BaseActivity, permissions: Array<String>, reques
  * @return Value determinate if permissions are granted.
  */
 fun arePermissionsGranted(activity: BaseActivity, permissions: Array<String>): Boolean {
-    for (permission in permissions) {
-        if (!isPermissionGranted(activity, permission)) {
-            return false
-        }
-    }
-    return true
+    return permissions.any { isPermissionGranted(activity, it) }
 }
 
 /**

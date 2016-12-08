@@ -57,7 +57,7 @@ class AddressComponent() {
     var shortName: String? = null
 
     /**
-     * List of component types, e.g [country].
+     * List of component types, e.g country.
      */
     @SerializedName("types")
     @Expose

@@ -20,8 +20,8 @@ import com.codefactory.przemyslawdabrowski.nearinpost.R
 /**
  * Layout that can slide down all content.
  */
-class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: Int)
-: FrameLayout(context, attrs, defStyleAttr) {
+open class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: Int)
+    : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
      * Rate od change of BottomSlideLayout position with respect to time.
@@ -118,7 +118,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
         if (dragView != null) {
             throw UnsupportedOperationException("BottomSheet must only have 1 child view")
         }
-        dragView = child;
+        dragView = child
         if (dragView != null) {
             dragViewOffsetHelper = ViewOffsetHelper(dragView as View)
             if (hasScrollingChild) {
@@ -221,7 +221,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
 
         settleAnim.duration = 200L
         settleAnim.interpolator = AnimationUtils.loadInterpolator(context,
-                android.R.interpolator.fast_out_slow_in);
+                android.R.interpolator.fast_out_slow_in)
         if (dismiss) {
             settleAnim.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator?) {
@@ -229,7 +229,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
                 }
             })
         }
-        settleAnim.start();
+        settleAnim.start()
     }
 
     /**
@@ -251,7 +251,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
      * Dispatch drag callback to all listeners.
      */
     protected fun dispatchDragCallback() {
-        if (listeners.size > 0) {
+        if (listeners.isNotEmpty()) {
             for (listener in listeners) {
                 listener.onDrag(top)
             }
@@ -262,7 +262,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
      * Dispatch dismiss callback to all listeners.
      */
     protected fun dispatchDismissCallback() {
-        if (listeners.size > 0) {
+        if (listeners.isNotEmpty()) {
             for (listener in listeners) {
                 listener.onDragDismissed()
             }
@@ -302,7 +302,7 @@ class BottomSlideLayout(context: Context?, attrs: AttributeSet?, defStyleAttr: I
         override fun onViewReleased(releasedChild: View?, xvel: Float, yvel: Float) {
             if (yvel >= FLING_VELOCITY) {
                 isDismissing = true
-                doDismiss();
+                doDismiss()
             } else {
                 // settle back into position
                 viewDragHelper.settleCapturedViewAt(dragViewLeft, dragViewTop)

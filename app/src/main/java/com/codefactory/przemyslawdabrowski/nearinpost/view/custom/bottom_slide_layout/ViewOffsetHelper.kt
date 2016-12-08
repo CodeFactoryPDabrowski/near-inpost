@@ -54,10 +54,10 @@ class ViewOffsetHelper(view: View) {
     fun setTopAndBottomOffset(offset: Int): Boolean {
         if (mOffsetTop != offset) {
             mOffsetTop = offset
-            updateOffsets();
-            return true;
+            updateOffsets()
+            return true
         }
-        return false;
+        return false
     }
 
     fun getTopAndBottomOffset() = mOffsetTop
@@ -68,9 +68,9 @@ class ViewOffsetHelper(view: View) {
     private fun updateOffsets() {
         // Translate view positions.
         fun tickleInvalidationFlag(view: View) {
-            val x: Float = ViewCompat.getTranslationX(view);
-            ViewCompat.setTranslationY(view, x + 1);
-            ViewCompat.setTranslationY(view, x);
+            val x: Float = ViewCompat.getTranslationX(view)
+            ViewCompat.setTranslationY(view, x + 1)
+            ViewCompat.setTranslationY(view, x)
         }
 
         ViewCompat.offsetTopAndBottom(mView, mOffsetTop - (mView.top - mLayoutTop))
@@ -78,7 +78,7 @@ class ViewOffsetHelper(view: View) {
         // Manually invalidate the view and parent to make sure we get drawn pre-M
         if (Build.VERSION.SDK_INT < 23) {
             tickleInvalidationFlag(mView)
-            val vp: ViewParent = mView.parent;
+            val vp: ViewParent = mView.parent
             if (vp is View) {
                 tickleInvalidationFlag(vp)
             }

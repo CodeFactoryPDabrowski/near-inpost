@@ -13,4 +13,4 @@ open class MachineDb(@PrimaryKey open var name: String = "",
                      open var longitude: Float? = null,
                      open var distance: Double? = null,
                      open var locationDescription: String? = null,
-                     open var searchPostalCode: String = "") : RealmObject() {}
+                     open var searchPostalCode: String = "") : RealmObject()

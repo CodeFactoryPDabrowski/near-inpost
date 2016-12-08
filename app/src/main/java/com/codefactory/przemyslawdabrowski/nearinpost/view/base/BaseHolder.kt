@@ -6,7 +6,7 @@ import android.view.View
 /**
  * Base implementation for view holder.
  */
-abstract class BaseHolder<I>(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseHolder<in I>(itemView: View?) : RecyclerView.ViewHolder(itemView) {
 
     /**
      * Bind item to view holder.

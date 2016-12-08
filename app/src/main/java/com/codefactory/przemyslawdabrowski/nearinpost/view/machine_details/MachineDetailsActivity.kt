@@ -98,7 +98,7 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         val inPostLocation: LatLng = LatLng((machineUi.latitude as Float).toDouble()
-                , (machineUi.longitude as Float).toDouble());
+                , (machineUi.longitude as Float).toDouble())
         p0?.addMarker(MarkerOptions().icon(BitmapDescriptorFactory
                 .fromResource(R.drawable.machine_details_loc_icon))
                 .anchor(1F, 1F)

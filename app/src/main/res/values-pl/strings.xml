@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Paczkomaty obok</string>
     <string name="main_nearest_in_post">Znajdź najbliższe paczkomaty</string>
     <string name="machine_details_city_title">Miasto:</string>
     <string name="machine_details_street_title">Ulica:</string>
