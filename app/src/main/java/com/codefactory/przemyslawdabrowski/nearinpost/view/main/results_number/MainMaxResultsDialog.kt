@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainMaxResultsDialog : DialogFragment(), MainMaxResultsDialogView {
 
     companion object {
-        val TAG = MainMaxResultsDialog::class.java.simpleName
+        val TAG: String = MainMaxResultsDialog::class.java.simpleName
     }
 
     @Inject

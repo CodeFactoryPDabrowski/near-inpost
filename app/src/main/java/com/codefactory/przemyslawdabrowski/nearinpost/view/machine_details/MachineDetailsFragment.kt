@@ -17,7 +17,7 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
         /**
          * Tag for transactions.
          */
-        val TAG = MachineDetailsFragment::class.java.canonicalName
+        val TAG: String = MachineDetailsFragment::class.java.simpleName
 
         /**
          * Key for machine details.
@@ -30,8 +30,8 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
         val POSTAL_CODE_KEY = "postal_code_key"
 
         fun newInstance(machineUi: MachineUi, postalCode: String): MachineDetailsFragment {
-            var fragment = MachineDetailsFragment()
-            var args: Bundle = Bundle()
+            val fragment = MachineDetailsFragment()
+            val args: Bundle = Bundle()
             args.putParcelable(MACHINE_DETAILS_KEY, machineUi)
             args.putString(POSTAL_CODE_KEY, postalCode)
             fragment.arguments = args
@@ -49,14 +49,14 @@ class MachineDetailsFragment : BaseFragment(), MachineDetailsFragmentView {
     lateinit var locationDescription: TextView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater?.inflate(R.layout.machine_details_fragment, container, false)
+        val view = inflater?.inflate(R.layout.machine_details_fragment, container, false)
         initViews(view)
         return view
     }
 
     override fun showDetails(postalCode: String, machineDetails: MachineUi) {
-        var empty = activity.resources.getString(R.string.machine_details_empty_field)
-        var distanceFrom = activity.resources.getString(R.string.machine_details_distance_from)
+        val empty = activity.resources.getString(R.string.machine_details_empty_field)
+        val distanceFrom = activity.resources.getString(R.string.machine_details_distance_from)
         distance.text = "$distanceFrom '$postalCode' -> ${machineDetails.distance ?: empty} Km"
         city.text = machineDetails.town ?: empty
         street.text = "${machineDetails.street ?: empty}  ${machineDetails.buildingNumber ?: ""}"

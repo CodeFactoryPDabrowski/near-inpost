@@ -110,7 +110,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     override fun onNearestInPostResult(postalCodeUi: PostalCodeUi, machines: List<Machine>) {
         searchProgress.makeInvisible()
         var items = emptyList<MachineItem>()
-        if (machines.size > 0) {
+        if (machines.isNotEmpty()) {
             postalCode = postalCodeUi
             items += MachineItem(postalCodeUi, MachineItemType.POSTAL_CODE)
             items += machines.map { MachineItem(MachineUi(it)) }
@@ -121,10 +121,12 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun onNearestInPostError(error: Throwable?) {
+        searchProgress.makeInvisible()
         Toast.makeText(activity, R.string.main_error_message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onFindCurrentLocationError(err: Throwable?) {
+        searchProgress.makeInvisible()
         Toast.makeText(activity, R.string.main_error_message, Toast.LENGTH_SHORT).show()
     }
 

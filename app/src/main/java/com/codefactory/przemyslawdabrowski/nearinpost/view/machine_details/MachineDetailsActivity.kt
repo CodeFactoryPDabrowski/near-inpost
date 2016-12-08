@@ -51,7 +51,7 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
          * @param postalCodeUi Searched postal code.
          */
         fun startActivity(activity: BaseActivity, machineUi: MachineUi, postalCodeUi: PostalCodeUi) {
-            var intent: Intent = Intent(activity, MachineDetailsActivity::class.java)
+            val intent: Intent = Intent(activity, MachineDetailsActivity::class.java)
             intent.putExtra(MACHINE_DETAILS_BUNDLE_KEY, machineUi)
             intent.putExtra(POSTAL_CODE_BUNDLE_KEY, postalCodeUi)
             activity.startActivity(intent)
@@ -72,13 +72,13 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.machine_details_activity)
-        var machine = intent.getParcelableExtra<MachineUi>(MACHINE_DETAILS_BUNDLE_KEY)
+        val machine = intent.getParcelableExtra<MachineUi>(MACHINE_DETAILS_BUNDLE_KEY)
         if (machine == null) {
             throw IllegalArgumentException("Machine details cannot be null")
         } else {
             machineUi = machine
         }
-        var postalCodeUi: PostalCodeUi? = intent.getParcelableExtra<PostalCodeUi>(POSTAL_CODE_BUNDLE_KEY) ?:
+        val postalCodeUi: PostalCodeUi? = intent.getParcelableExtra<PostalCodeUi>(POSTAL_CODE_BUNDLE_KEY) ?:
                 throw IllegalArgumentException("Machine details cannot be null")
 
         if (savedInstanceState == null) {
@@ -93,13 +93,11 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         // Disable interactions with map fragment.
         fun disableMapInteraction() {
             p0?.setOnMarkerClickListener { true }
-            var mapUISettings = p0?.uiSettings
-            if (mapUISettings != null) {
-                mapUISettings.setAllGesturesEnabled(false)
-            }
+            val mapUISettings = p0?.uiSettings
+            mapUISettings?.setAllGesturesEnabled(false)
         }
 
-        var inPostLocation: LatLng = LatLng((machineUi.latitude as Float).toDouble()
+        val inPostLocation: LatLng = LatLng((machineUi.latitude as Float).toDouble()
                 , (machineUi.longitude as Float).toDouble());
         p0?.addMarker(MarkerOptions().icon(BitmapDescriptorFactory
                 .fromResource(R.drawable.machine_details_loc_icon))
@@ -156,7 +154,7 @@ class MachineDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
         Handler().postDelayed({
             if (!isFinishing) {
-                var inPostMapFragment = SupportMapFragment.newInstance()
+                val inPostMapFragment = SupportMapFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.machineDetailsLocationContainer,
                         inPostMapFragment).commit()
                 inPostMapFragment.getMapAsync(this)

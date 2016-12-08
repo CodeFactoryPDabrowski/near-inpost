@@ -114,20 +114,17 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
                 .flatMap {
                     geocodeService.reverseGeocodeAddress(it.text().toString()
                             , BuildConfig.GOOGLE_GEOCODING_API_KEY)
-                            .filter { it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.size > 0 }
+                            .filter { it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.isNotEmpty() }
                             .map { it ->
                                 var searchAddresses = emptyArray<SimpleLocationSearchResultUi>()
                                 for (result in it.results) {
-                                    for (addressComponent in result.addressComponents) {
-                                        if (addressComponent.types.size == 1
-                                                && addressComponent.types[0].equals(AddressComponentType.POSTAL_CODE.componentType)) {
-                                            if (!result.formattedAddress.isNullOrEmpty() && !addressComponent.longName.isNullOrEmpty()) {
+                                    result.addressComponents
+                                            .filter { it.types.size == 1 && it.types[0] == AddressComponentType.POSTAL_CODE.componentType && !result.formattedAddress.isNullOrEmpty() && !it.longName.isNullOrEmpty() }
+                                            .forEach {
                                                 searchAddresses += SimpleLocationSearchResultUi(
                                                         result.formattedAddress!!
-                                                        , PostalCodeUi(addressComponent.longName!!))
+                                                        , PostalCodeUi(it.longName!!))
                                             }
-                                        }
-                                    }
                                 }
                                 return@map searchAddresses.take(MAX_RESULTS)
                             }
@@ -135,7 +132,7 @@ class LocationSearchView(context: Context, attrs: AttributeSet?, defStyle: Int) 
                             .subscribeOn(Schedulers.io())
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe ({
+                .subscribe({
                     adapter.addSearchResult(it)
                     val resultListSize = it.size
                     setSearchLayoutHeight(resultListSize)

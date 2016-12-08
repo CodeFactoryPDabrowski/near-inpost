@@ -26,9 +26,9 @@ class MainActivity : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         // Workaround to propagate permission result to fragments.
-        for (fragment in supportFragmentManager.fragments) {
-            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        }
+        supportFragmentManager.fragments
+                .filterNotNull()
+                .forEach { it.onRequestPermissionsResult(requestCode, permissions, grantResults) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

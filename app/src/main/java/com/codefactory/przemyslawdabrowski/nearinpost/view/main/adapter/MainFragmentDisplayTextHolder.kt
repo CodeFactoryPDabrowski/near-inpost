@@ -13,7 +13,7 @@ import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItem
 import com.codefactory.przemyslawdabrowski.nearinpost.view.main.item.MachineItemType
 
 //TODO: For postal code should be other holder?
-class MainFragmentDisplayTextHolder(var parent: ViewGroup?) :
+class MainFragmentDisplayTextHolder(parent: ViewGroup?) :
         BaseHolder<MachineItem>(LayoutInflater.from(parent?.context)
                 .inflate(R.layout.main_fragment_empty_holder, parent, false)) {
 
@@ -34,7 +34,7 @@ class MainFragmentDisplayTextHolder(var parent: ViewGroup?) :
 
     override fun bindItem(it: MachineItem) {
         if (it.itemType == MachineItemType.POSTAL_CODE) {
-            var prefix = context?.getString(R.string.main_fragment_postal_code_text)
+            val prefix = context?.getString(R.string.main_fragment_postal_code_text)
             displayedText.text = "$prefix '${(it.itemData as PostalCodeUi).postalCode}' "
         }
     }

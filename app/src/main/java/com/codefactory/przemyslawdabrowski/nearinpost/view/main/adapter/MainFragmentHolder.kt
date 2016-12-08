@@ -20,12 +20,12 @@ class MainFragmentHolder(itemView: View?, listener: MainFragmentHolderListener) 
     /**
      * Context needs for resources.
      */
-    private lateinit var context: Context
+    private var context: Context
 
     /**
      * Listener to communicate with parent component.
      */
-    private lateinit var holderListener: MainFragmentHolderListener
+    private var holderListener: MainFragmentHolderListener
 
     /**
      * InPost ui object.

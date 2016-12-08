@@ -30,12 +30,12 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
     /**
      * Service for getting nearest InPost machines.
      */
-    lateinit var nearestMachineService: NearestMachinesService
+    var nearestMachineService: NearestMachinesService
 
     /**
      * Service for getting geocoding data from google apis.
      */
-    lateinit var googleGeocodeService: GoogleGeocodeService
+    var googleGeocodeService: GoogleGeocodeService
 
     /**
      * TODO: create common object for list of machines and postal code UI
@@ -60,7 +60,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
     fun searchForNearestInPost(postalCodeUi: PostalCodeUi) {
         //TODO: Check if valid post code. Do some cache after rotation mechanism.
         val postalCode = postalCodeUi.postalCode
-        if (postalCode.length == 0) {
+        if (postalCode.isEmpty()) {
             view.onEmptyPostalCode()
             return
         }
@@ -99,7 +99,7 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                         val lastSearched = it.map {
                             fromDb(it)
                         }
-                        if (lastSearched.size == 0) {
+                        if (lastSearched.isEmpty()) {
                             view.onFreshStart()
                         } else {
                             view.onNearestInPostResult(PostalCodeUi(it[0].searchPostalCode), lastSearched)
@@ -138,18 +138,13 @@ class MainFragmentPresenter @Inject constructor(retrofit: Retrofit
                             , BuildConfig.GOOGLE_GEOCODING_API_KEY)
                 }
                 .filter {
-                    it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.size > 0
+                    it.status == ReverseGeocodedAddressStatusType.OK.responseType && it.results.isNotEmpty()
                 }
                 .map { it ->
-                    for (result in it.results) {
-                        for (addressComponent in result.addressComponents) {
-                            if (addressComponent.types.size == 1
-                                    && addressComponent.types[0].equals(AddressComponentType.POSTAL_CODE.componentType)) {
-                                return@map addressComponent.longName
-                            }
-                        }
-                    }
-                    return@map null
+                    return@map it.results
+                            .flatMap { it.addressComponents }
+                            .firstOrNull { it.types.size == 1 && it.types[0] == AddressComponentType.POSTAL_CODE.componentType }
+                            ?.longName
                 }
                 .filter { it != null }
                 .flatMap {

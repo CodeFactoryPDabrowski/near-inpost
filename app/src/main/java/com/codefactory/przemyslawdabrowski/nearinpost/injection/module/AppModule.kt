@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModule(private val application: App) {
+class AppModule(application: App) {
 
     /**
      * Instance of {@link App} for dagger injection.
