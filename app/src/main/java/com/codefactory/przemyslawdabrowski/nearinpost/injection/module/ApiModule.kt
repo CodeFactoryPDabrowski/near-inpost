@@ -2,6 +2,7 @@ package com.codefactory.przemyslawdabrowski.nearinpost.injection.module
 
 import com.codefactory.przemyslawdabrowski.nearinpost.api.response_converter.JsonAndXmlConverter
 import com.codefactory.przemyslawdabrowski.nearinpost.injection.scope.AppScope
+import com.facebook.stetho.okhttp3.BuildConfig
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
@@ -17,9 +18,12 @@ class ApiModule(val baseUrl: String) {
     @AppScope
     @Provides
     fun provideOkHTTPClient(): OkHttpClient {
-        val client = OkHttpClient.Builder().addNetworkInterceptor(StethoInterceptor()).build()
+        val client = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            client.addNetworkInterceptor(StethoInterceptor())
+        }
 
-        return client
+        return client.build()
     }
 
     @AppScope
